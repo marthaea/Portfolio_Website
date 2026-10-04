@@ -56,11 +56,6 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--color-pink); ou
   .info-list li { padding: 0 0 15px; margin-bottom: 6px; }
   .info-list strong { display: block; font-family: var(--font-poppins-bold); color: #313131; text-transform: uppercase; letter-spacing: 2px; font-size: 15px; line-height: 30px; }
   .info-list span { display: block; font-family: var(--font-poppins-regular); color: #888; font-size: 15px; line-height: 1; }
-  .skill-bars li { height: 6px; background: #a1a1a1; width: 100%; margin-bottom: 60px; position: relative; }
-  .skill-bars li strong { position: absolute; left: 0; top: -30px; font-family: var(--font-poppins-bold); color: #313131; text-transform: uppercase; letter-spacing: 2px; font-size: 15px; line-height: 24px; }
-  .skill-bars .progress { background: #313131; position: relative; height: 100%; }
-  .skill-bars .progress span { position: absolute; right: 0; top: -36px; font-family: var(--font-poppins-regular); color: #fff; font-size: 11px; line-height: 1; background: #313131; padding: 6px; border-radius: 3px; }
-  .skill-bars .progress span::after { position: absolute; left: 50%; bottom: -5px; margin-left: -5px; border: 5px solid transparent; border-top-color: #313131; border-bottom: 0; content: ""; }
 
   /* resume timeline */
   .timeline-wrap { position: relative; margin: 15px 0 60px; }

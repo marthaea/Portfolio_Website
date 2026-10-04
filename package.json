@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "fetch-stories": "node scripts/fetch-wattpad.mjs",
+    "test:bot": "node scripts/test-bot.mjs"
   },
   "dependencies": {
     "framer-motion": "^14.0.0",
@@ -21,5 +23,8 @@
     "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3",
     "vite": "^8.3.2"
+  },
+  "engines": {
+    "node": ">=20.19.0"
   }
 }
