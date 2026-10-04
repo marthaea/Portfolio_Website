@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { projects } from '../data/projects'
-import { asset } from '../asset'
+import { asset, sizeOf } from '../asset'
 import { Reveal, SectionIntro } from './Reveal'
 import ProjectModal, { Picture, Tile } from './ProjectModal'
 
 function Thumb({ p }) {
-  if (p.video) return <video src={asset(p.video)} muted playsInline preload="metadata" className="block w-full" />
+  if (p.video) return <video src={asset(p.video)} {...sizeOf(p.video)} muted playsInline preload="metadata" className="block w-full" />
   if (p.image) return <Picture src={p.image} alt={p.title} icon={p.icon} className="block w-full align-middle transition-all duration-500 ease-in-out group-hover:scale-105" />
   return <Tile title={p.title} icon={p.icon} />
 }

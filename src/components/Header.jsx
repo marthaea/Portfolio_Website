@@ -27,6 +27,22 @@ export default function Header() {
   const current = useCurrentSection()
   const t = { duration: 0.25 }
 
+  // Scroll to the section ourselves: closing the menu in the same click made browsers drop the
+  // link's own jump, so the page stayed put while only the address bar changed.
+  const go = (e, id) => {
+    const el = document.getElementById(id)
+    if (!el) return
+    e.preventDefault()
+    setOpen(false)
+    history.replaceState(null, '', `#${id}`)
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    requestAnimationFrame(() => el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }))
+    // if anything above changed height on the way (e.g. a late image), settle exactly on the section
+    const settle = () => { if (Math.abs(el.getBoundingClientRect().top) > 4) el.scrollIntoView({ behavior: 'auto', block: 'start' }) }
+    if ('onscrollend' in window) window.addEventListener('scrollend', settle, { once: true })
+    else setTimeout(settle, 1200)
+  }
+
   return (
     <header className="fixed z-[600] min-h-[66px] w-full">
       <div className="row relative min-h-[66px]" style={{ maxWidth: 1140 }}>
@@ -61,7 +77,7 @@ export default function Header() {
                     <motion.li key={id} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.08 + i * 0.04 }}>
                       <a
                         href={`#${id}`}
-                        onClick={() => setOpen(false)}
+                        onClick={(e) => go(e, id)}
                         className={`block py-[15px] leading-4 hover:pl-2.5 hover:!text-pink ${current === id ? '!text-pink' : '!text-white'}`}
                       >
                         {label}
