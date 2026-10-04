@@ -4,11 +4,20 @@ import { projects } from '../data/projects'
 import { asset } from '../asset'
 import { Reveal, SectionIntro } from './Reveal'
 
+function Tile({ title, className = '' }) {
+  return <div className={`flex aspect-[4/3] w-full items-center justify-center bg-[#313131] p-8 text-center font-poppins-semibold text-white ${className}`}>{title}</div>
+}
+
+function Picture({ src, alt, className }) {
+  const [failed, setFailed] = useState(false)
+  if (failed) return <Tile title={alt} className="text-[26px]" />
+  return <img src={asset(src)} alt={alt} loading="lazy" onError={() => setFailed(true)} className={className} />
+}
+
 function Thumb({ p }) {
   if (p.video) return <video src={asset(p.video)} muted playsInline preload="metadata" className="block w-full" />
-  if (p.image) return <img src={asset(p.image)} alt={p.title} loading="lazy" className="block w-full align-middle transition-all duration-500 ease-in-out group-hover:scale-105" />
-  // projects without a screenshot yet get a plain title tile
-  return <div className="flex aspect-[4/3] w-full items-center justify-center bg-[#313131] p-8 text-center font-poppins-semibold text-[26px] text-white">{p.title}</div>
+  if (p.image) return <Picture src={p.image} alt={p.title} className="block w-full align-middle transition-all duration-500 ease-in-out group-hover:scale-105" />
+  return <Tile title={p.title} className="text-[26px]" />
 }
 
 function Item({ p, onOpen, index }) {
@@ -58,8 +67,8 @@ function Modal({ p, onClose }) {
           {p.video
             ? <video src={asset(p.video)} controls autoPlay muted playsInline className="block w-full" />
             : p.image
-              ? <img src={asset(p.image)} alt="" className="block w-full align-bottom" />
-              : <div className="flex aspect-[4/3] w-full items-center justify-center bg-[#313131] p-8 text-center font-poppins-semibold text-[28px] text-white">{p.title}</div>}
+              ? <Picture src={p.image} alt={p.title} className="block w-full align-bottom" />
+              : <Tile title={p.title} className="text-[28px]" />}
         </div>
         <div className="description-box">
           <h4>{p.title}</h4>
@@ -88,23 +97,47 @@ function useColumnCount() {
   return two ? 2 : 1
 }
 
+const types = ['All', ...new Set(projects.map((p) => p.type))]
+
+function Filters({ value, onChange }) {
+  return (
+    <ul className="mx-auto mb-[42px] flex w-[94%] max-w-[1100px] flex-wrap justify-center gap-x-[30px] gap-y-1" aria-label="Filter projects by type">
+      {types.map((t) => (
+        <li key={t}>
+          <button
+            onClick={() => onChange(t)}
+            aria-pressed={value === t}
+            className={`relative px-1 py-2 font-poppins-bold text-[13px] uppercase leading-6 tracking-[2px] transition-colors duration-300 hover:text-pink ${value === t ? 'text-pink' : 'text-[#888]'}`}
+          >
+            {t}
+            {value === t && <motion.span layoutId="folio-filter" className="absolute inset-x-0 bottom-0 h-[3px] bg-pink" transition={{ type: 'spring', stiffness: 400, damping: 34 }} />}
+          </button>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 export default function Portfolio() {
   const [active, setActive] = useState(null)
+  const [filter, setFilter] = useState('All')
   const count = useColumnCount()
-  const columns = Array.from({ length: count }, (_, c) => projects.map((p, i) => ({ p, i })).filter(({ i }) => i % count === c))
+  const shown = filter === 'All' ? projects : projects.filter((p) => p.type === filter)
+  const columns = Array.from({ length: count }, (_, c) => shown.map((p, i) => ({ p, i })).filter(({ i }) => i % count === c))
 
   return (
     <section id="portfolio" className="bg-white py-[120px]">
       <div className="row">
         <SectionIntro eyebrow="Portfolio" title="Creative writing, Art and Web development." lead="Kindly check out some of my projects." />
       </div>
-      <div className="mx-auto flex w-[94%] max-w-[1100px] items-start">
+      <Filters value={filter} onChange={setFilter} />
+      <motion.div key={filter} className="mx-auto flex w-[94%] max-w-[1100px] items-start" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}>
         {columns.map((col, c) => (
           <div key={c} className="min-w-0 flex-1">
             {col.map(({ p, i }) => <Item key={p.title + i} p={p} index={i} onOpen={setActive} />)}
           </div>
         ))}
-      </div>
+      </motion.div>
       <AnimatePresence>{active && <Modal p={active} onClose={() => setActive(null)} />}</AnimatePresence>
     </section>
   )

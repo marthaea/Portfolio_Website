@@ -19,7 +19,16 @@ Add one object to `src/data/projects.js`:
 { title: 'My App', category: 'Web', url: 'https://my-app.netlify.app',
   image: '/images/portfolio/my-app.webp', description: 'What it is.', tech: ['React', 'Netlify'] },
 ```
-Put the screenshot in `public/images/portfolio/` (WebP/JPG, ~900px wide). Without `image`, a styled card is shown.
+Put the screenshot in `public/images/portfolio/` (WebP/JPG, ~900px wide). If the image is missing, a title tile is shown instead.
+The filter tabs are built from the `type` values, so a new type gets its own tab automatically.
+
+### Screenshots of live sites
+Netlify entries point at `public/images/sites/<name>.webp`. To capture them from the live URLs:
+```bash
+npm i -D playwright && npx playwright install chromium
+npm run screenshots            # only sites without an image yet
+npm run screenshots -- --all   # re-capture everything
+```
 
 ## Deploying
 Connected to Netlify: `netlify.toml` sets build command `npm run build` and publish dir `dist`.
