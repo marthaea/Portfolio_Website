@@ -10,7 +10,8 @@ npm run build    # production build in dist/
 
 ## Editing content
 - `src/data/site.js` — bio, skills, resume, services, contact details, social links
-- `src/data/projects.js` — everything in the portfolio grid
+- `src/data/site.js` — also holds the "Currently" strip under the hero (`currently`)
+- `src/data/projects.js` — everything in the portfolio grid and the bookshelf. Optional fields: `progress` + `todo` (shows an "In progress" badge), `excerpt` (array of paragraphs for "Peek Inside"), `spine` (colour of the book on the shelf)
 
 ### Adding a project (e.g. a new Netlify site)
 Add one object to `src/data/projects.js` (web projects use a hand-drawn icon from `src/components/SketchIcon.jsx`; pick any `icon` name from that file):

@@ -57,3 +57,10 @@ export const stats = [
   { icon: 'icon-cup', value: 5500, title: 'Coding hours' },
   { icon: 'icon-clock', value: 7200, title: 'Inspirations' },
 ]
+
+// "Currently" strip under the hero — edit freely.
+export const currently = [
+  { label: 'Studying', text: 'BSc IT at Uganda Christian University' },
+  { label: 'Building', text: 'Chattr, a chat app with a bot' },
+  { label: 'Writing', text: 'New stories, shared on Wattpad' },
+]

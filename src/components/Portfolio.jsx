@@ -3,22 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { projects } from '../data/projects'
 import { asset } from '../asset'
 import { Reveal, SectionIntro } from './Reveal'
-import SketchIcon from './SketchIcon'
-
-function Tile({ title, icon, large, hideTitle }) {
-  return (
-    <div className="flex aspect-[4/3] w-full flex-col items-center justify-center bg-[radial-gradient(circle_at_50%_38%,#3f3f3f,#262626)] p-8 text-center transition-opacity duration-500 group-hover:opacity-0">
-      <SketchIcon name={icon} size={large ? 220 : 170} />
-      {!hideTitle && <span className="mt-3 font-poppins-semibold text-[21px] text-white">{title}</span>}
-    </div>
-  )
-}
-
-function Picture({ src, alt, icon, large, className }) {
-  const [failed, setFailed] = useState(false)
-  if (failed) return <Tile title={alt} icon={icon} large={large} />
-  return <img src={asset(src)} alt={alt} loading="lazy" onError={() => setFailed(true)} className={className} />
-}
+import ProjectModal, { Picture, Tile } from './ProjectModal'
 
 function Thumb({ p }) {
   if (p.video) return <video src={asset(p.video)} muted playsInline preload="metadata" className="block w-full" />
@@ -36,6 +21,11 @@ function Item({ p, onOpen, index }) {
       transition={{ duration: 0.8, delay: (index % 2) * 0.1, ease: [0.22, 1, 0.36, 1] }}
     >
       <Thumb p={p} />
+      {p.progress < 100 && (
+        <span className="pointer-events-none absolute top-4 left-4 z-[2] flex items-center gap-2 rounded-full bg-black/70 px-3 py-1 font-poppins-bold text-[10px] uppercase leading-5 tracking-[2px] text-white backdrop-blur-sm">
+          <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-pink" />In progress
+        </span>
+      )}
       <a
         href="#portfolio"
         onClick={(e) => { e.preventDefault(); onOpen(p) }}
@@ -47,45 +37,6 @@ function Item({ p, onOpen, index }) {
           <span className="folio-types">{p.type}</span>
         </div>
       </a>
-    </motion.div>
-  )
-}
-
-function Modal({ p, onClose }) {
-  useEffect(() => {
-    const onKey = (e) => e.key === 'Escape' && onClose()
-    document.addEventListener('keydown', onKey)
-    document.body.style.overflow = 'hidden'
-    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = '' }
-  }, [onClose])
-
-  return (
-    <motion.div className="fixed inset-0 z-[1000] flex items-start justify-center overflow-y-auto p-5" role="dialog" aria-modal="true" aria-label={p.title}>
-      <motion.div className="fixed inset-0 bg-[#0b0b0b]" initial={{ opacity: 0 }} animate={{ opacity: 0.9 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} onClick={onClose} />
-      <motion.div
-        className="popup-modal relative m-auto"
-        initial={{ opacity: 0, y: -80 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -80 }}
-        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <div>
-          {p.video
-            ? <video src={asset(p.video)} controls autoPlay muted playsInline className="block w-full" />
-            : p.image
-              ? <Picture src={p.image} alt={p.title} icon={p.icon} large className="block w-full align-bottom" />
-              : <Tile title={p.title} icon={p.icon} large hideTitle />}
-        </div>
-        <div className="description-box">
-          <h4>{p.title}</h4>
-          {p.description && <p>{p.description}</p>}
-          <div className="categories">{p.type}</div>
-        </div>
-        <div className="link-box">
-          {p.url && <a href={p.url} target="_blank" rel="noopener noreferrer">Details</a>}
-          <a href="#portfolio" onClick={(e) => { e.preventDefault(); onClose() }}>Close</a>
-        </div>
-      </motion.div>
     </motion.div>
   )
 }
@@ -144,7 +95,7 @@ export default function Portfolio() {
           </div>
         ))}
       </motion.div>
-      <AnimatePresence>{active && <Modal p={active} onClose={() => setActive(null)} />}</AnimatePresence>
+      <AnimatePresence>{active && <ProjectModal p={active} onClose={() => setActive(null)} />}</AnimatePresence>
     </section>
   )
 }
