@@ -1,3 +1,5 @@
+import { projects } from './projects'
+
 export const profile = {
   name: 'Martha Praise Katusiime',
   roles: ['Front-end Developer', 'Tech Enthusiast', 'Software Developer', 'Artist', 'Writer', 'Animator'],
@@ -36,32 +38,35 @@ export const experience = [
 ]
 
 export const education = [
-  { title: 'Degree-Bachelor of Science in Information Technology', period: 'July 2024 - Present', place: 'Uganda Christian University', text: "I am currently pursuing my bachelors' degree." },
+  { title: 'Degree-Bachelor of Science in Information Technology', period: 'May 2024 - Present', place: 'Uganda Christian University', text: "I am currently pursuing my bachelors' degree." },
   { title: 'A-Level certificate', period: '2022 and 2023', place: 'St. Lawrence Academy, Schools and colleges Paris Palais', text: 'I attained my Advanced level certificate and got 17 points with an A, B and C in Art, Literature and Divinity with a distinction in ICT.' },
   { title: 'O-level certificate', period: '2017-2020', place: "Bishop Kivengere Girls' School, Muyebe", text: 'I successfully completed my ordinary level certificate with a first grade of 29 aggregates' },
 ]
 
 export const services = [
   { icon: 'icon-earth', title: 'Webdesign', text: 'Feel free to reach out!' },
-  { icon: 'icon-window', title: 'Web Development', text: 'Here to serve you!' },
+  { icon: 'icon-window', title: 'Web Development', text: 'React, Next.js and Tailwind builds that load fast and work on any screen.' },
+  { icon: 'icon-cloud', title: 'Back-end & Databases', text: 'Node.js, Supabase, PostgreSQL and REST APIs behind your app.' },
+  { icon: 'icon-network', title: 'Networking', text: 'Enterprise network design: VLANs, routing and wireless, planned and documented.' },
+  { icon: 'icon-terminal', title: 'Servers & Automation', text: 'Server setup and scripts that take repetitive work off your hands.' },
+  { icon: 'icon-chat', title: 'AI & Chatbots', text: 'Chat features and bots built on AI APIs, tuned with careful prompts.' },
   { icon: 'icon-paint-brush', title: 'Creative writing', text: "Let's write that down." },
   { icon: 'icon-toggles', title: 'Art and Design', text: 'Let us bring that imagination to reality!' },
   { icon: 'icon-image', title: 'Graphics Design', text: "Let's design that!" },
-  { icon: 'icon-chat', title: 'Consultancy', text: 'More than ready to talk.' },
+  { icon: 'icon-video-camera', title: 'Animation', text: 'Hand-drawn motion and storytelling in Toon Boom Harmony and TVPaint.' },
+  { icon: 'icon-headset', title: 'Consultancy', text: 'More than ready to talk.' },
 ]
 
+// Numbers marked "counted" update themselves as you add projects. The rest are estimates:
+// edit them to whatever you can stand behind.
+const count = (test) => projects.filter(test).length
+
 export const stats = [
-  { icon: 'icon-pencil-ruler', value: 55, title: 'Projects Completed' },
-  { icon: 'icon-users', value: 40, title: 'Happy Clients' },
-  { icon: 'icon-badge', value: 15, title: 'Awards Received' },
+  { icon: 'icon-pencil-ruler', value: count((p) => p.type === 'Web Development'), title: 'Websites Built' }, // counted
+  { icon: 'icon-users', value: 5, title: 'Happy Clients' }, // Docere, Voiceless Shelter, Timo's Bread, Bullion Events, Sky level Films
+  { icon: 'icon-book', value: count((p) => p.type === 'Creative Writing' && p.spine), title: 'Stories Written' }, // counted
   { icon: 'icon-light-bulb', value: 150, title: 'Ideas About to unfold' },
-  { icon: 'icon-cup', value: 5500, title: 'Coding hours' },
+  { icon: 'icon-cup', value: 1700, suffix: '+', title: 'Coding hours' }, // estimate: ~2 hours a day since May 2024
   { icon: 'icon-clock', value: 7200, title: 'Inspirations' },
 ]
 
-// "Currently" strip under the hero — edit freely.
-export const currently = [
-  { label: 'Studying', text: 'BSc IT at Uganda Christian University' },
-  { label: 'Building', text: 'Chattr, a chat app with a bot' },
-  { label: 'Writing', text: 'New stories, shared on Wattpad' },
-]
