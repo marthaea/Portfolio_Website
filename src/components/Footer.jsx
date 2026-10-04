@@ -14,7 +14,7 @@ export default function Footer() {
   }, [])
 
   return (
-    <footer className="relative bg-[#0e0e0e] pt-10 pb-28 sm:pb-10 font-poppins-regular text-[13px] text-white/45">
+    <footer className="relative overflow-x-clip bg-[#0e0e0e] pt-10 pb-28 sm:pb-10 font-poppins-regular text-[13px] text-white/45">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-pink/60 to-transparent" />
       <div className="row flex flex-col items-center gap-6 text-center">
         <div>
