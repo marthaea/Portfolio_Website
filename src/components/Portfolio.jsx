@@ -3,10 +3,11 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ExternalLink, X } from 'lucide-react'
 import { categories, projects } from '../data/projects'
 import { SectionHeading, Reveal } from './Reveal'
+import { asset } from '../asset'
 
 function Media({ p, className, controls }) {
-  if (p.video) return <video src={p.video} className={className} controls={controls} muted={!controls} playsInline preload="metadata" />
-  if (p.image) return <img src={p.image} alt={p.title} loading="lazy" className={className} />
+  if (p.video) return <video src={asset(p.video)} className={className} controls={controls} muted={!controls} playsInline preload="metadata" />
+  if (p.image) return <img src={asset(p.image)} alt={p.title} loading="lazy" className={className} />
   // no screenshot yet: a styled placeholder card
   return (
     <div className={`${className} flex aspect-[4/3] items-center justify-center bg-gradient-to-br from-accent/30 via-panel to-violet-700/30 p-6 text-center`}>

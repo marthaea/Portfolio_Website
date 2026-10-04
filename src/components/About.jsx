@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Download } from 'lucide-react'
 import { profile, skills } from '../data/site'
+import { asset } from '../asset'
 import { Reveal, SectionHeading, Stagger, item } from './Reveal'
 
 export default function About() {
@@ -10,7 +11,7 @@ export default function About() {
       <div className="grid items-center gap-12 md:grid-cols-2">
         <Reveal>
           <motion.img whileHover={{ scale: 1.02, rotate: -1 }} transition={{ type: 'spring', stiffness: 200 }}
-            src="/images/profile.webp" alt="Portrait of Martha Praise Katusiime" width="900" height="1200" loading="lazy"
+            src={asset('/images/profile.webp')} alt="Portrait of Martha Praise Katusiime" width="900" height="1200" loading="lazy"
             className="w-full rounded-2xl border border-line object-cover shadow-2xl shadow-accent/10" />
         </Reveal>
         <div>
@@ -28,7 +29,7 @@ export default function About() {
             ))}
           </Stagger>
           <Reveal delay={0.2} className="mt-10 flex flex-wrap gap-4">
-            <a href="/cv.pdf" className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition hover:scale-105">
+            <a href={asset('/cv.pdf')} className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition hover:scale-105">
               <Download size={16} /> Download CV
             </a>
             <a href="#contact" className="rounded-full border border-line px-6 py-3 text-sm font-medium text-white transition hover:border-accent">Hire me</a>
