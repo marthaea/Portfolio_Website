@@ -84,7 +84,7 @@ const jokes = [
 const intents = [
   // ---- small talk ----
   { id: 'greet', small: true, maxWords: 6, groups: [['hi', 'hello', 'hey', 'hiya', 'howdy', 'greetings', 'morning', 'afternoon', 'evening', 'yo', 'hola', 'oli', 'jambo', 'habari']],
-    answer: () => ({ text: pick(['Hi there! I’m Martha’s bot. Ask me about her work, skills, stories or how to hire her.', 'Hello! Lovely to see you here. What would you like to know about Martha?', 'Hey! I’m on a little coffee break from coding. Ask me anything about Martha.']) }) },
+    answer: () => ({ text: pick(['Hi there! I’m Martha’s assistant. Ask me about her work, skills, stories or how to hire her.', 'Hello! Lovely to see you here. What would you like to know about Martha?', 'Hey! I’m on a little coffee break from coding. Ask me anything about Martha.']) }) },
   { id: 'howareyou', small: true, phrase: /\b(how (are|ar|r|re) (you|u|ya|yu)|how (you|u) doing|hows it going|how is it going|how are things|hows life|how do you do|whats up|wassup|wazzup|sup|what (are|r) (you|u) (up to|doing)|whatre you (up to|doing)|wyd)\b/,
     answer: () => ({ text: pick(['I’m great, thanks for asking! Just typing away on Martha’s laptop. How can I help?', 'Doing well! A little busy writing code, but never too busy to chat. What about you?']) }) },
   { id: 'imgood', small: true, maxWords: 4, groups: [['good', 'great', 'fine', 'okay', 'ok', 'well', 'awesome', 'cool', 'nice']],
@@ -96,7 +96,7 @@ const intents = [
   { id: 'bye', small: true, groups: [['bye', 'goodbye', 'later', 'ciao', 'cya', 'goodnight', 'night', 'tata']],
     answer: () => ({ text: 'Bye for now! If you have a project in mind, Martha would love to hear about it.', links: [bookCall] }) },
   { id: 'bot', small: true, groups: [['you', 'your', 'u', 'ur'], ['bot', 'robot', 'ai', 'real', 'human', 'name', 'who', 'person', 'alive']],
-    answer: () => ({ text: 'I’m Martha’s little bot: a drawing of her, fed with what she does. I’m not the real Martha, but I know a lot about her work. For anything personal or detailed, email her.', links: [{ label: 'Email Martha', href: `mailto:${email}` }] }) },
+    answer: () => ({ text: 'I’m Martha’s assistant: a drawing of her who knows all about her work. I’m not the real Martha, though. For anything personal or detailed, contact her to book an appointment.', links: [bookCall] }) },
   { id: 'joke', small: true, groups: [['joke', 'jokes', 'funny', 'laugh', 'pun']],
     answer: () => ({ text: pick(jokes) }) },
   { id: 'colour', small: true, groups: [['favourite', 'favorite', 'fav', 'colour', 'color', 'pink']],
@@ -150,7 +150,7 @@ const intents = [
   { id: 'cv', weight: 1.5, groups: [['cv', 'resume', 'resumé', 'download', 'pdf']],
     answer: () => ({ text: 'Here’s Martha’s one-page CV.', links: [{ label: 'Download CV', href: 'cv.pdf' }] }) },
   { id: 'site', groups: [['this'], ['site', 'website', 'portfolio', 'page'], ['built', 'made', 'make', 'created', 'stack', 'tech', 'react', 'code', 'coded']],
-    answer: () => ({ text: 'This site is built with React, Tailwind CSS and Framer Motion, deployed on Netlify. The pencil-style icons are hand-made SVGs, and I run entirely in your browser: no AI service, just a lot of careful matching.' }) },
+    answer: () => ({ text: 'This site is built with React, Tailwind CSS and Framer Motion, deployed on Netlify. The pencil-style icons are hand-made SVGs, and I, Martha’s assistant, run entirely in your browser.' }) },
 ]
 
 // every project in the portfolio can be asked about by name ("what is chattr?")
@@ -179,10 +179,10 @@ export const suggestions = ['What do you do?', 'Are you available?', 'Show me yo
 
 const fallback = () => ({
   text: pick([
-    'Hmm, I’m not sure about that one. I know about Martha’s work, skills, stories, services and how to reach her.',
-    'That one’s beyond me, sorry! Try asking about her projects, skills or stories, or email Martha directly.',
+    'I’m not sure about that one. Please contact Martha to book an appointment, and she’ll answer it herself.',
+    'That’s one for Martha herself. Please contact her to book an appointment.',
   ]),
-  links: [{ label: 'Email Martha', href: `mailto:${email}` }],
+  links: [bookCall, { label: 'Email Martha', href: `mailto:${email}` }],
   chips: suggestions.slice(0, 4),
 })
 

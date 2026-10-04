@@ -7,7 +7,7 @@ import BotAvatar from './BotAvatar'
 
 const greeting = {
   from: 'bot',
-  text: 'Hi! I’m Martha’s bot. 👋\nAsk me about her work, skills, stories, services or how to hire her. Typos are fine!',
+  text: 'Hi! I’m Martha’s assistant. 👋\nAsk me about her work, skills, stories, services or how to hire her.',
   chips: suggestions,
 }
 
@@ -113,7 +113,7 @@ export default function ChatBot() {
         {open && (
           <motion.section
             role="dialog"
-            aria-label="Chat with Martha’s bot"
+            aria-label="Chat with Martha’s assistant"
             initial={{ opacity: 0, y: 24, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
@@ -124,9 +124,9 @@ export default function ChatBot() {
             <header className="flex items-center gap-3 bg-ink px-4 py-3">
               <BotAvatar size={44} waving={waving} />
               <div className="min-w-0 flex-1">
-                <p className="font-poppins-semibold text-[15px] leading-5 text-white">Ask Martha’s bot</p>
+                <p className="font-poppins-semibold text-[15px] leading-5 text-white">Martha’s assistant</p>
                 <p className="flex items-center gap-1.5 font-poppins-regular text-[11.5px] text-white/60">
-                  <span className="inline-block h-2 w-2 rounded-full bg-[#3ddc84]" />Answers instantly · typos welcome
+                  <span className="inline-block h-2 w-2 rounded-full bg-[#3ddc84]" />Online · answers instantly
                 </p>
               </div>
               <button onClick={() => setOpen(false)} aria-label="Close chat" className="p-1 text-white/70 hover:text-white"><X size={20} /></button>
@@ -136,7 +136,7 @@ export default function ChatBot() {
               {messages.map((m, i) => <Message key={i} m={m} onChip={send} />)}
               {typing && (
                 <li className="flex">
-                  <div className="flex gap-1 rounded-[16px_16px_16px_4px] bg-[#f3f3f3] px-4 py-3" aria-label="Bot is typing">
+                  <div className="flex gap-1 rounded-[16px_16px_16px_4px] bg-[#f3f3f3] px-4 py-3" aria-label="Assistant is typing">
                     {[0, 1, 2].map((i) => (
                       <motion.span key={i} className="h-2 w-2 rounded-full bg-[#aaa]" animate={{ y: [0, -4, 0] }} transition={{ duration: 0.6, repeat: Infinity, delay: i * 0.15 }} />
                     ))}
@@ -180,7 +180,7 @@ export default function ChatBot() {
         </AnimatePresence>
         <motion.button
           onClick={() => setOpen((o) => !o)}
-          aria-label={open ? 'Close chat with Martha’s bot' : 'Chat with Martha’s bot'}
+          aria-label={open ? 'Close chat with Martha’s assistant' : 'Chat with Martha’s assistant'}
           aria-expanded={open}
           whileHover={{ scale: 1.06 }}
           whileTap={{ scale: 0.95 }}

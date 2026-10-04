@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 
 /**
  * Mini Martha: puffed hair, pink outfit, typing on a laptop, waving now and then.
@@ -73,22 +73,43 @@ export default function BotAvatar({ waving = false, size = 120, className = '' }
 
           {/* typing hands peeking out at the sides of the lid */}
           <motion.ellipse cx="44" cy="148" rx="7" ry="5" fill={SKIN} {...typing(0)} />
-          {!waving && <motion.ellipse cx="116" cy="148" rx="7" ry="5" fill={SKIN} {...typing(0.35)} />}
+          <motion.g animate={{ opacity: waving ? 0 : 1 }} transition={{ duration: 0.2, delay: waving ? 0 : 0.45 }}>
+            <motion.ellipse cx="116" cy="148" rx="7" ry="5" fill={SKIN} {...typing(0.35)} />
+          </motion.g>
         </motion.g>
 
-        {/* the waving arm */}
-        {waving && (
-          <motion.g
-            initial={{ rotate: 40, opacity: 0 }}
-            animate={{ rotate: [40, -18, 14, -18, 14, -10, 40], opacity: [0, 1, 1, 1, 1, 1, 0] }}
-            transition={{ duration: 2.2, ease: 'easeInOut' }}
-            style={{ transformBox: 'view-box', transformOrigin: '118px 134px' }}
-          >
-            <path d="M118 134 C124 120 128 108 130 96" stroke={PINK} strokeWidth="13" strokeLinecap="round" fill="none" />
-            <circle cx="130" cy="90" r="8" fill={SKIN} />
-            <path d="M125 84 L124 77 M129 82 L129 74 M133 82 L134 75 M137 86 L140 80" stroke={SKIN} strokeWidth="3.4" strokeLinecap="round" />
-          </motion.g>
-        )}
+        {/* the waving arm: rises from behind the laptop, waves from the elbow, then lowers again */}
+        <AnimatePresence>
+          {waving && (
+            <motion.g
+              key="arm"
+              initial={{ rotate: 75, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 75, opacity: 0 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              style={{ transformBox: 'view-box', transformOrigin: '116px 140px' }}
+            >
+              {/* upper arm in the pink sleeve */}
+              <path d="M116 140 L127 114" stroke={PINK} strokeWidth="13" strokeLinecap="round" />
+              {/* forearm + hand, waving from the elbow */}
+              <motion.g
+                animate={{ rotate: [0, -22, 16, -22, 16, -22, 0] }}
+                transition={{ duration: 1.5, delay: 0.35, ease: 'easeInOut' }}
+                style={{ transformBox: 'view-box', transformOrigin: '127px 114px' }}
+              >
+                <path d="M127 114 L131 96" stroke={SKIN} strokeWidth="9" strokeLinecap="round" />
+                <rect x="124" y="80" width="15" height="15" rx="6" fill={SKIN} />
+                <g stroke={SKIN} strokeWidth="3.6" strokeLinecap="round">
+                  <path d="M126.5 81 L125.5 73" /><path d="M130.5 80 L130.5 71" /><path d="M134.5 80.5 L135.5 72" /><path d="M138 83 L140.5 76.5" />
+                  <path d="M124.5 89 L119.5 85" />
+                </g>
+                <path d="M128 88 C130 90 133 90 135 88" stroke={SKIN_DARK} strokeWidth="1" fill="none" strokeLinecap="round" />
+              </motion.g>
+              {/* puff of the sleeve over the shoulder so the joint stays hidden */}
+              <circle cx="118" cy="132" r="11" fill={PINK} />
+            </motion.g>
+          )}
+        </AnimatePresence>
       </g>
       <circle cx="80" cy="80" r="78" fill="none" stroke="#fff" strokeWidth="3" />
     </svg>

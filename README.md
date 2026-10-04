@@ -22,9 +22,9 @@ Add one object to `src/data/projects.js` (web projects use a hand-drawn icon fro
 To use a screenshot instead of an icon, add `image: ...` (a file under `public/`). Without an image the icon tile is shown.
 The filter tabs are built from the `type` values, so a new type gets its own tab automatically.
 
-## Chat bot (mini Martha)
+## Martha's assistant (chat)
 The waving avatar in the bottom-left corner answers questions in the browser, with no AI service or API key.
-- `src/bot/brain.js` builds its answers from the site's data (services, skills, projects, case studies, stats), so it stays up to date by itself. It forgives typos and handles small talk.
+- `src/bot/brain.js` builds its answers from the site's data (services, skills, projects, case studies, stats), so it stays up to date by itself. It copes with misspellings and handles small talk; when it doesn't know, it asks the visitor to contact Martha to book an appointment.
 - `src/bot/faqs.js`: add your own questions and answers here.
 - `npm run test:bot` checks that typo-ridden questions still reach the right answer.
 
