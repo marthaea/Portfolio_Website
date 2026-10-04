@@ -75,12 +75,45 @@ const skillLines = profile.skillGroups.map(([g, items]) => `${g}: ${items.join('
 const study = education[0]
 const cs = (name) => caseStudies.find((c) => c.title.toLowerCase().includes(name))
 
-const jokes = [
-  'Why do network engineers make great friends? They always keep you connected.',
-  'Martha told her CSS it was a mess. It said it just had too much class.',
-  'Why did the developer go broke? She used up all her cache.',
-  'There are 10 kinds of people: those who understand binary and those who don’t.',
-]
+// Jokes by category, so visitors can pick something they'll enjoy (not everyone loves tech jokes).
+const jokes = {
+  animal: {
+    label: 'Animal joke', keys: ['animal', 'animals', 'dog', 'cat', 'pet', 'pets'],
+    list: ['What do you call a sleeping bull? A bulldozer.', 'Why don’t cats play cards in the wild? Too many cheetahs.', 'What do you call a fish wearing a bow tie? Sofishticated.'],
+  },
+  food: {
+    label: 'Food joke', keys: ['food', 'eat', 'eating', 'cooking', 'kitchen', 'fruit'],
+    list: ['Why did the banana go to the doctor? It wasn’t peeling well.', 'What do you call a fake noodle? An impasta.', 'Why don’t eggs tell jokes? They’d crack each other up.'],
+  },
+  school: {
+    label: 'School joke', keys: ['school', 'teacher', 'student', 'class', 'math', 'maths', 'homework'],
+    list: ['Why was the maths book sad? It had too many problems.', 'Why did the student eat his homework? The teacher said it was a piece of cake.', 'What is a teacher’s favourite nation? Expla-nation.'],
+  },
+  book: {
+    label: 'Book joke', keys: ['book', 'books', 'story', 'stories', 'reading', 'writer', 'writing'],
+    list: ['Why did the book join the police? It wanted to go undercover.', 'I’m reading a book about anti-gravity. It’s impossible to put down.', 'Why are writers always cold? They’re surrounded by drafts.'],
+  },
+  pun: {
+    label: 'Silly pun', keys: ['pun', 'puns', 'silly', 'dad', 'wordplay', 'random', 'surprise', 'any'],
+    list: ['I used to be a banker, but I lost interest.', 'What do you call a bear with no teeth? A gummy bear.', 'Why can’t you trust stairs? They’re always up to something.'],
+  },
+  tech: {
+    label: 'Tech joke', keys: ['tech', 'computer', 'computers', 'coding', 'programming', 'developer', 'geek', 'nerd', 'network'],
+    list: ['Why do network engineers make great friends? They always keep you connected.', 'Martha told her CSS it was a mess. It said it just had too much class.', 'Why did the developer go broke? She used up all her cache.'],
+  },
+}
+const jokeChips = Object.values(jokes).map((j) => j.label)
+const lastJoke = {}
+
+function tellJoke(words) {
+  const cat = Object.entries(jokes).find(([, j]) => hit(words, j.keys) >= 0.8)
+  if (!cat) return { text: 'Happy to! What kind of joke would you like?', chips: jokeChips }
+  const [id, j] = cat
+  const options = j.list.filter((x) => x !== lastJoke[id])
+  const text = pick(options.length ? options : j.list)
+  lastJoke[id] = text
+  return { text, chips: [`Another ${j.label.toLowerCase()}`, 'A different kind', 'What does Martha do?'] }
+}
 
 /**
  * Each intent lists word groups. Every group must match at least one word in the message;
@@ -102,8 +135,8 @@ const intents = [
     answer: () => ({ text: 'Bye for now! If you have a project in mind, Martha would love to hear about it.', links: [bookCall] }) },
   { id: 'bot', small: true, groups: [['you', 'your', 'u', 'ur'], ['bot', 'robot', 'ai', 'real', 'human', 'name', 'who', 'person', 'alive']],
     answer: () => ({ text: 'I’m Martha’s assistant: a drawing of her who knows all about her work. I’m not the real Martha, though. For anything personal or detailed, contact her to book an appointment.', links: [bookCall] }) },
-  { id: 'joke', small: true, groups: [['joke', 'jokes', 'funny', 'laugh', 'pun']],
-    answer: () => ({ text: pick(jokes) }) },
+  { id: 'joke', small: true, weight: 3, groups: [['joke', 'jokes', 'funny', 'laugh', 'pun', 'puns']], answer: (words) => tellJoke(words) },
+  { id: 'jokekind', small: true, phrase: /\b(a )?different (kind|joke|one|type)\b/, answer: () => ({ text: 'Sure! Pick one:', chips: jokeChips }) },
   { id: 'colour', small: true, groups: [['colour', 'color', 'colours', 'colors', 'pink']], boost: ['favourite', 'favorite', 'fav'],
     answer: () => ({ text: 'Pink, obviously. Look at the outfit. 💗' }) },
   { id: 'love', small: true, groups: [['love', 'like', 'awesome', 'amazing', 'beautiful', 'cool', 'nice', 'wow'], ['site', 'website', 'portfolio', 'you', 'bot', 'this', 'work']],
@@ -222,5 +255,5 @@ export function reply(message) {
   }
 
   if (!best || best.score < 1.2) return { ...fallback(), intent: 'fallback' }
-  return { ...best.intent.answer(), intent: best.intent.id }
+  return { ...best.intent.answer(words), intent: best.intent.id }
 }

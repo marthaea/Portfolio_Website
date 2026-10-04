@@ -4,7 +4,7 @@ const cases = [
   ['hellooo', 'greet'], ['hi there', 'greet'], ['good morning!', 'greet'],
   ['how ar you', 'howareyou'], ['hows it going', 'howareyou'], ['whats up', 'howareyou'],
   ['thnks', 'thanks'], ['webale', 'thanks'], ['bye bye', 'bye'],
-  ['who r u', 'bot'], ['are you a real person?', 'bot'], ['tell me a joek', 'joke'], ['favourite colour?', 'colour'], ['whats your favourite movie', 'fallback'],
+  ['who r u', 'bot'], ['are you a real person?', 'bot'], ['tell me a joek', 'joke'], ['animal joke', 'joke'], ['a different kind', 'jokekind'], ['favourite colour?', 'colour'], ['whats your favourite movie', 'fallback'],
   ['tel me abot martha', 'about'], ['who is martha', 'about'],
   ['waht servcies do you ofer', 'services'], ['what can you do', 'services'],
   ['are you availabel for freelance', 'hire'], ['i want to hire you', 'hire'],

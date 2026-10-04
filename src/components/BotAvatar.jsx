@@ -76,40 +76,41 @@ export default function BotAvatar({ waving = false, size = 120, className = '' }
           <motion.g animate={{ opacity: waving ? 0 : 1 }} transition={{ duration: 0.2, delay: waving ? 0 : 0.45 }}>
             <motion.ellipse cx="116" cy="148" rx="7" ry="5" fill={SKIN} {...typing(0.35)} />
           </motion.g>
+
+          {/* the waving arm: grows from her right shoulder (the puffed sleeve), waves from the elbow, then lowers.
+              It lives inside the breathing group so it always moves with her body. */}
+          <AnimatePresence>
+            {waving && (
+              <motion.g
+                key="arm"
+                initial={{ rotate: 60, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 60, opacity: 0 }}
+                transition={{ rotate: { duration: 0.45, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.15 } }}
+                style={{ transformBox: 'view-box', transformOrigin: '118px 128px' }}
+              >
+                <motion.g
+                  animate={{ rotate: [0, -20, 14, -20, 14, -20, 0] }}
+                  transition={{ duration: 1.5, delay: 0.4, ease: 'easeInOut' }}
+                  style={{ transformBox: 'view-box', transformOrigin: '132px 106px' }}
+                >
+                  <path d="M132 106 L136 86" stroke={SKIN} strokeWidth="9" strokeLinecap="round" />
+                  <ellipse cx="137" cy="78" rx="8" ry="9" fill={SKIN} />
+                  <g stroke={SKIN} strokeWidth="3.6" strokeLinecap="round">
+                    <path d="M131.5 72 L130.5 64" /><path d="M135.5 70 L135.5 61" /><path d="M139.5 70.5 L140.5 62" /><path d="M143 74 L145.5 67.5" />
+                    <path d="M129.5 81 L124.5 77" />
+                  </g>
+                  <path d="M133 80 C135 82 138 82 140 80" stroke={SKIN_DARK} strokeWidth="1" fill="none" strokeLinecap="round" />
+                </motion.g>
+                {/* upper arm in the pink sleeve, drawn over the forearm so the elbow joint is hidden */}
+                <path d="M118 128 L132 106" stroke={PINK} strokeWidth="14" strokeLinecap="round" />
+                <circle cx="118" cy="130" r="13" fill={PINK} />
+                <path d="M110 126 C114 121 121 120 126 123" stroke="#ff7ab0" strokeWidth="2" fill="none" strokeLinecap="round" />
+              </motion.g>
+            )}
+          </AnimatePresence>
         </motion.g>
 
-        {/* the waving arm: rises from behind the laptop, waves from the elbow, then lowers again */}
-        <AnimatePresence>
-          {waving && (
-            <motion.g
-              key="arm"
-              initial={{ rotate: 75, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 75, opacity: 0 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              style={{ transformBox: 'view-box', transformOrigin: '116px 140px' }}
-            >
-              {/* upper arm in the pink sleeve */}
-              <path d="M116 140 L127 114" stroke={PINK} strokeWidth="13" strokeLinecap="round" />
-              {/* forearm + hand, waving from the elbow */}
-              <motion.g
-                animate={{ rotate: [0, -22, 16, -22, 16, -22, 0] }}
-                transition={{ duration: 1.5, delay: 0.35, ease: 'easeInOut' }}
-                style={{ transformBox: 'view-box', transformOrigin: '127px 114px' }}
-              >
-                <path d="M127 114 L131 96" stroke={SKIN} strokeWidth="9" strokeLinecap="round" />
-                <rect x="124" y="80" width="15" height="15" rx="6" fill={SKIN} />
-                <g stroke={SKIN} strokeWidth="3.6" strokeLinecap="round">
-                  <path d="M126.5 81 L125.5 73" /><path d="M130.5 80 L130.5 71" /><path d="M134.5 80.5 L135.5 72" /><path d="M138 83 L140.5 76.5" />
-                  <path d="M124.5 89 L119.5 85" />
-                </g>
-                <path d="M128 88 C130 90 133 90 135 88" stroke={SKIN_DARK} strokeWidth="1" fill="none" strokeLinecap="round" />
-              </motion.g>
-              {/* puff of the sleeve over the shoulder so the joint stays hidden */}
-              <circle cx="118" cy="132" r="11" fill={PINK} />
-            </motion.g>
-          )}
-        </AnimatePresence>
       </g>
       <circle cx="80" cy="80" r="78" fill="none" stroke="#fff" strokeWidth="3" />
     </svg>
