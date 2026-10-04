@@ -1,4 +1,4 @@
-import wattpad from './wattpad.json'
+import wattpad from './wattpad.json' with { type: 'json' }
 
 /**
  * Add a project by adding an object to the end of this list — nothing else to change.

@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "fetch-stories": "node scripts/fetch-wattpad.mjs"
+    "fetch-stories": "node scripts/fetch-wattpad.mjs",
+    "test:bot": "node scripts/test-bot.mjs"
   },
   "dependencies": {
     "framer-motion": "^14.0.0",
