@@ -18,16 +18,31 @@ export default function Footer() {
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-pink/60 to-transparent" />
       <div className="row flex flex-col items-center gap-6 text-center">
         <div>
-          {/* signature writes itself in */}
-          <motion.p
-            initial={{ clipPath: 'inset(0 100% 0 0)' }}
-            whileInView={{ clipPath: 'inset(0 0% 0 0)' }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.8, ease: 'easeInOut' }}
-            className="font-script text-[52px] leading-[1.1] text-pink"
-          >
-            Martha
-          </motion.p>
+          <div className="flex items-center justify-center gap-6">
+            {/* signature writes itself in */}
+            <motion.p
+              initial={{ clipPath: 'inset(0 100% 0 0)' }}
+              whileInView={{ clipPath: 'inset(0 0% 0 0)' }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.8, ease: 'easeInOut' }}
+              className="font-script text-[52px] leading-[1.1] text-pink"
+            >
+              Martha
+            </motion.p>
+            {/* ...then the page gets stamped "Finished", like the last page of a story */}
+            <motion.div
+              aria-label="Finished"
+              initial={{ opacity: 0, scale: 2.4, rotate: -24 }}
+              whileInView={{ opacity: 0.92, scale: 1, rotate: -9 }}
+              viewport={{ once: true }}
+              transition={{ delay: 1.9, type: 'spring', stiffness: 520, damping: 18, mass: 0.8 }}
+              className="select-none rounded-[6px] border-[3px] border-pink p-[3px] [mask-image:radial-gradient(circle_at_30%_40%,#000_55%,rgb(0_0_0/.72)_80%)]"
+            >
+              <div className="rounded-[3px] border border-pink px-4 py-1 font-poppins-bold text-[17px] uppercase leading-6 tracking-[5px] text-pink">
+                Finished
+              </div>
+            </motion.div>
+          </div>
           <p className="mt-1 text-[11px] uppercase tracking-[3px]">Engineer · Writer · Artist</p>
         </div>
 
@@ -41,7 +56,11 @@ export default function Footer() {
 
         <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
           <p>© {new Date().getFullYear()} {`Martha Praise Katusiime`}</p>
-          <p>Made in Kampala, Uganda <span className="text-pink">♥</span></p>
+          <p>
+            Made by{' '}
+            <a href="https://github.com/marthaea" target="_blank" rel="noopener noreferrer" className="!text-white underline decoration-pink decoration-2 underline-offset-4 hover:!text-pink">Martha</a>{' '}
+            <span className="text-pink">♥</span>
+          </p>
         </div>
       </div>
 
