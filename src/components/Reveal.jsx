@@ -1,46 +1,28 @@
 import { motion } from 'framer-motion'
 
-// Fades + slides content up once it scrolls into view.
-export function Reveal({ children, delay = 0, y = 28, className, as = 'div' }) {
-  const Tag = motion[as]
-  return (
-    <Tag
-      className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </Tag>
-  )
-}
+const ease = [0.22, 1, 0.36, 1]
 
-export function Stagger({ children, className, gap = 0.08 }) {
+/** Fades and slides content up once as it scrolls into view. */
+export function Reveal({ children, delay = 0, y = 30, className }) {
   return (
     <motion.div
       className={className}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: '-80px' }}
-      variants={{ show: { transition: { staggerChildren: gap } } }}
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.8, delay, ease }}
     >
       {children}
     </motion.div>
   )
 }
 
-export const item = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-}
-
-export function SectionHeading({ eyebrow, title, text }) {
+export function SectionIntro({ eyebrow, title, lead, dark }) {
   return (
-    <Reveal className="mx-auto mb-14 max-w-2xl text-center">
-      <p className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">{eyebrow}</p>
-      <h2 className="mt-3 text-3xl font-semibold text-white sm:text-4xl">{title}</h2>
-      {text && <p className="mt-4 font-serif text-lg text-zinc-400">{text}</p>}
-    </Reveal>
+    <div className={`section-intro ${dark ? 'on-dark' : ''}`}>
+      <Reveal><h5>{eyebrow}</h5></Reveal>
+      <Reveal delay={0.1}><h1>{title}</h1></Reveal>
+      {lead && <Reveal delay={0.2}><p className="lead">{lead}</p></Reveal>}
+    </div>
   )
 }

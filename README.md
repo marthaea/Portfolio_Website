@@ -23,3 +23,6 @@ Put the screenshot in `public/images/portfolio/` (WebP/JPG, ~900px wide). Withou
 
 ## Deploying
 Connected to Netlify: `netlify.toml` sets build command `npm run build` and publish dir `dist`.
+
+## Design
+The visual design (light/dark sections, pink `#FF0077` accent, Poppins + Lora, icon font, layout) matches the original site. Only the tech stack (React + Tailwind) and the animations are new.

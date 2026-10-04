@@ -1,41 +1,61 @@
-import { motion } from 'framer-motion'
-import { Download } from 'lucide-react'
-import { profile, skills } from '../data/site'
+import { motion, useInView } from 'framer-motion'
+import { useRef } from 'react'
+import { profile } from '../data/site'
 import { asset } from '../asset'
-import { Reveal, SectionHeading, Stagger, item } from './Reveal'
+import { Reveal, SectionIntro } from './Reveal'
+
+function SkillBar({ name, percent }) {
+  const ref = useRef(null)
+  const inView = useInView(ref, { once: true, margin: '-40px' })
+  return (
+    <li ref={ref}>
+      <motion.div className="progress" initial={{ width: 0 }} animate={{ width: inView ? `${percent}%` : 0 }} transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}>
+        <motion.span initial={{ opacity: 0 }} animate={{ opacity: inView ? 1 : 0 }} transition={{ delay: 0.9, duration: 0.4 }}>{percent}%</motion.span>
+      </motion.div>
+      <strong>{name}</strong>
+    </li>
+  )
+}
 
 export default function About() {
   return (
-    <section id="about" className="mx-auto max-w-6xl scroll-mt-16 px-5 py-28">
-      <SectionHeading eyebrow="About" title="Let me introduce myself." />
-      <div className="grid items-center gap-12 md:grid-cols-2">
-        <Reveal>
-          <motion.img whileHover={{ scale: 1.02, rotate: -1 }} transition={{ type: 'spring', stiffness: 200 }}
-            src={asset('/images/profile.webp')} alt="Portrait of Martha Praise Katusiime" width="900" height="1200" loading="lazy"
-            className="w-full rounded-2xl border border-line object-cover shadow-2xl shadow-accent/10" />
-        </Reveal>
-        <div>
-          <Reveal delay={0.1}><p className="font-serif text-xl leading-relaxed text-zinc-300">{profile.bio}</p></Reveal>
-          <Stagger className="mt-8 space-y-6">
-            {Object.entries(skills).map(([group, list]) => (
-              <motion.div key={group} variants={item}>
-                <h3 className="mb-2 text-sm font-semibold uppercase tracking-wider text-zinc-500">{group}</h3>
-                <ul className="flex flex-wrap gap-2">
-                  {list.map((s) => (
-                    <li key={s} className="rounded-full border border-line bg-panel px-4 py-1.5 text-sm transition hover:border-accent hover:text-white">{s}</li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-          </Stagger>
-          <Reveal delay={0.2} className="mt-10 flex flex-wrap gap-4">
-            <a href={asset('/cv.pdf')} className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition hover:scale-105">
-              <Download size={16} /> Download CV
-            </a>
-            <a href="#contact" className="rounded-full border border-line px-6 py-3 text-sm font-medium text-white transition hover:border-accent">Hire me</a>
+    <section id="about" className="bg-white pt-[120px] pb-[150px]">
+      <div className="row">
+        <div className="section-intro !mb-[30px]">
+          <Reveal><h5>About</h5></Reveal>
+          <Reveal delay={0.1}><h1>Let me introduce myself.</h1></Reveal>
+          <Reveal delay={0.2} className="mt-[42px] text-left">
+            <img src={asset('/images/profile.webp')} alt="Profile Picture" width="900" height="1200" loading="lazy" className="block h-auto w-full object-cover" />
+            <p className="lead mt-[18px] !text-left">{profile.lead}</p>
           </Reveal>
         </div>
       </div>
+
+      <div className="about-content mx-auto mb-[36px] grid w-[94%] max-w-[850px] text-left min-[769px]:grid-cols-2">
+        <Reveal className="px-5">
+          <h3 className="max-[768px]:text-center">Profile</h3>
+          <p className="mb-[21px]">{profile.summary}</p>
+          <ul className="info-list mb-[42px]">
+            {profile.info.map(([k, v]) => (
+              <li key={k}><strong>{k}:</strong><span>{v}</span></li>
+            ))}
+          </ul>
+        </Reveal>
+        <Reveal delay={0.1} className="px-5">
+          <h3 className="max-[768px]:text-center">Skills</h3>
+          <p className="mb-[21px]">
+            {profile.skillsText.map(([k, v]) => (<span key={k} className="block">{k}: {v}</span>))}
+          </p>
+          <ul className="skill-bars mt-[60px] mb-[30px]">
+            {profile.skillBars.map(([name, pct]) => <SkillBar key={name} name={name} percent={pct} />)}
+          </ul>
+        </Reveal>
+      </div>
+
+      <Reveal className="row text-center">
+        <a href="#contact" title="Hire Me" className="btn btn-stroke w-[250px] max-[768px]:mb-[30px] max-[768px]:w-full min-[769px]:mr-[40px]">Hire Me</a>
+        <a href={asset('/cv.pdf')} title="Download CV" className="btn btn-primary w-[250px] max-[768px]:w-full">Download CV</a>
+      </Reveal>
     </section>
   )
 }
