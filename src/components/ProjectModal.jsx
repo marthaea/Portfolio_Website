@@ -103,7 +103,7 @@ export default function ProjectModal({ p, onClose }) {
         <div className="description-box">
           {p.progress < 100 && <Progress p={p} />}
           <h4>{p.title}</h4>
-          {p.description && <p>{p.description}</p>}
+          {p.description && <p className="max-h-[190px] overflow-y-auto whitespace-pre-line pr-1">{p.description}</p>}
           <div className="categories">{p.type}</div>
         </div>
         <div className="link-box">

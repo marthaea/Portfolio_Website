@@ -1,3 +1,5 @@
+import wattpad from './wattpad.json'
+
 /**
  * Add a project by adding an object to the end of this list — nothing else to change.
  *
@@ -9,7 +11,7 @@
  *  progress, todo     : unfinished projects — shows an "In progress" badge (progress is 0–100, todo says what is left)
  *  url                : optional "Details" link (Netlify site, custom domain, Wattpad…)
  */
-export const projects = [
+const list = [
   { title: 'Chaos On The Edge', type: 'Creative Writing', spine: '#404546', image: '/images/portfolio/liberty.webp', description: 'Short story that I wrote. You can read more in the details section.', url: 'https://www.wattpad.com/1502731591-chaos-on-the-edge' },
   { title: 'Arms Over Head', type: 'Art', image: '/images/portfolio/shutterbug.webp', description: 'One of my recent artpieces.' },
   { title: 'Silence Speaks', type: 'Creative Writing', spine: '#9d9996', image: '/images/portfolio/clouds.webp', description: 'Story that I wrote.', url: 'https://www.wattpad.com/1410631197-silence-speaks' },
@@ -48,3 +50,12 @@ export const projects = [
   { title: 'Glass People', type: 'Creative Writing', spine: '#767676', image: '/images/posters/glass-people.webp', description: 'Story poster.', url: 'https://www.wattpad.com/story/404563183-glass-people', excerpt: ["\"Typical modern day society’s hatred for anything genuine.\"", "— someone"] },
   { title: 'Singing to the Shadows', type: 'Creative Writing', spine: '#b48759', image: '/images/posters/singing-to-the-shadows.webp', description: 'Story poster.', url: 'https://www.wattpad.com/story/407446479-%F0%9D%95%8A%F0%9D%95%80%E2%84%95%F0%9D%94%BE%F0%9D%95%80%E2%84%95%F0%9D%94%BE-%F0%9D%95%8B%F0%9D%95%86-%F0%9D%95%8B%E2%84%8D%F0%9D%94%BC-%F0%9D%95%8A%E2%84%8D%F0%9D%94%B8%F0%9D%94%BB%F0%9D%95%86%F0%9D%95%8E%F0%9D%95%8A', excerpt: ["Some invitations should never be accepted."] },
 ]
+
+// Wattpad descriptions are pulled in by `npm run fetch-stories` (see scripts/fetch-wattpad.mjs);
+// a hand-written `description` above is used until then.
+const storyId = (url = '') => url.match(/wattpad\.com\/story\/(\d+)/)?.[1]
+
+export const projects = list.map((p) => {
+  const blurb = wattpad[storyId(p.url)]?.description
+  return blurb ? { ...p, description: blurb } : p
+})
