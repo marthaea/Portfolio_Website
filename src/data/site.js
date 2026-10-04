@@ -55,11 +55,14 @@ export const services = [
   { icon: 'icon-headset', title: 'Consultancy', text: 'More than ready to talk.' },
 ]
 
-// "countless" stats count up fast and then settle on the word "Countless".
+// Real figures, used by Martha's assistant when someone asks (the stats strip shows "Countless").
+export const facts = { websites: '70+', clients: '25+', stories: '28+' }
+
+// Every stat races upward and then settles on the word "Countless".
 export const stats = [
-  { icon: 'icon-pencil-ruler', value: 70, suffix: '+', title: 'Websites Built' },
-  { icon: 'icon-users', value: 25, suffix: '+', title: 'Happy Clients' },
-  { icon: 'icon-book', value: 28, suffix: '+', title: 'Stories Written' },
+  { icon: 'icon-pencil-ruler', countless: true, title: 'Websites Built' },
+  { icon: 'icon-users', countless: true, title: 'Happy Clients' },
+  { icon: 'icon-book', countless: true, title: 'Stories Written' },
   { icon: 'icon-light-bulb', countless: true, title: 'Ideas About to unfold' },
   { icon: 'icon-cup', countless: true, title: 'Coding hours' },
   { icon: 'icon-clock', countless: true, title: 'Inspirations' },
