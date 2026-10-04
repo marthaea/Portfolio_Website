@@ -37,9 +37,14 @@ const GENERIC = new Set(['do', 'can', 'you', 'u', 'how', 'it', 'up', 'where', 'w
   'tell', 'she', 'like', 'love', 'what', 'your',
   'ur', 'site', 'page', 'code', 'link', 'safe', 'old', 'number', 'message', 'reach', 'job', 'quick', 'fast', 'soon', 'when'])
 
+// Common words in a question are never treated as misspellings of a keyword ("whats" is not "whatsapp").
+const PLAIN = new Set(['whats', 'what', 'where', 'there', 'their', 'about', 'with', 'have', 'this', 'that', 'your', 'from',
+  'when', 'which', 'would', 'could', 'should', 'please', 'does', 'some', 'they', 'them', 'were', 'will'])
+
 /** How well does a typed word match a keyword? 0 = not at all, 1 = exactly. */
 function similar(word, key) {
   if (word === key) return GENERIC.has(key) ? 0.6 : 1
+  if (PLAIN.has(word)) return 0
   if (GENERIC.has(key) || key.length <= 3 || word.length <= 2) return 0 // these must match exactly
   if (word[0] !== key[0]) return 0 // typos rarely change the first letter
   // "portfolios" ~ "portfolio", "remotely" ~ "remote"; a short word only counts as the start of a long one from 5 letters
