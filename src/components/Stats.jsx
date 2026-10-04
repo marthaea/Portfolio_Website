@@ -1,15 +1,36 @@
-import { useEffect, useRef } from 'react'
-import { animate, motion, useInView } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import { animate, motion, useInView, useReducedMotion } from 'framer-motion'
 import { stats } from '../data/site'
 
-function Count({ to, suffix = '' }) {
+const EASE_IN = [0.55, 0, 0.9, 0.4]
+
+function Count({ to, suffix = '', countless, delay = 0 }) {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true })
+  const reduce = useReducedMotion()
+  const [done, setDone] = useState(false)
+
   useEffect(() => {
     if (!inView) return
-    const controls = animate(0, to, { duration: 2.2, ease: 'easeOut', onUpdate: (v) => { if (ref.current) ref.current.textContent = Math.round(v).toLocaleString('en-US') + suffix } })
+    if (countless && reduce) { setDone(true); return }
+    const target = countless ? 9999999 : to
+    const controls = animate(0, target, {
+      duration: countless ? 2.8 : 2.2,
+      delay,
+      ease: countless ? EASE_IN : 'easeOut',
+      onUpdate: (v) => { if (ref.current) ref.current.textContent = Math.round(v).toLocaleString('en-US') + (countless ? '' : suffix) },
+      onComplete: () => countless && setDone(true),
+    })
     return () => controls.stop()
-  }, [inView, to])
+  }, [inView, to, countless, reduce, delay])
+
+  if (countless && done) {
+    return (
+      <motion.span initial={{ scale: 0.6, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: 'spring', stiffness: 260, damping: 14 }} className="inline-block text-[28px] min-[1025px]:text-[26px]">
+        Countless
+      </motion.span>
+    )
+  }
   return <span ref={ref}>0</span>
 }
 
@@ -28,7 +49,7 @@ export default function Stats() {
               transition={{ duration: 0.7, delay: i * 0.08 }}
             >
               <div><i className={`${s.icon} text-[48px] text-black`} aria-hidden /></div>
-              <h3 className="mt-3 font-poppins-medium text-[36px] leading-[1.5] text-white"><Count to={s.value} suffix={s.suffix} /></h3>
+              <h3 className="mt-3 font-poppins-medium text-[36px] leading-[1.5] text-white"><Count to={s.value} suffix={s.suffix} countless={s.countless} delay={i * 0.15} /></h3>
               <h5 className="font-poppins-bold text-[13px] uppercase leading-6 tracking-[2px] text-white/50">{s.title}</h5>
             </motion.li>
           ))}

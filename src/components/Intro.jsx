@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { FaAngleDown } from 'react-icons/fa'
-import { profile } from '../data/site'
+import { availability, profile } from '../data/site'
 import { asset } from '../asset'
 import SocialLinks from './SocialLinks'
 
@@ -21,6 +21,20 @@ export default function Intro() {
       <div className="absolute inset-0 bg-[#111] opacity-[.85]" />
 
       <div className="relative w-[94%] max-w-[1140px] -translate-y-[21px] px-5">
+        {availability.open && (
+          <motion.a
+            {...up(-1)}
+            href={availability.url}
+            className="group mb-5 inline-flex max-w-full flex-wrap items-center justify-center gap-x-3 gap-y-0 rounded-full border border-white/20 bg-white/5 px-5 py-1.5 font-poppins-regular text-[12px] uppercase leading-6 tracking-[2px] !text-white backdrop-blur-sm hover:border-pink-dark hover:bg-white/10"
+          >
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#3ddc84] opacity-70" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#3ddc84]" />
+            </span>
+            <span>{availability.text}<span className="hidden text-white/50 min-[601px]:inline"> · {availability.where}</span></span>
+            <span className="font-poppins-bold text-pink transition-transform duration-300 group-hover:translate-x-1">{availability.cta} →</span>
+          </motion.a>
+        )}
         <motion.h5 {...up(0)} className="font-poppins-bold text-[15px] uppercase tracking-[2px] text-pink-dark min-[601px]:text-[18px] min-[769px]:text-[23px] min-[769px]:tracking-[3px]">
           Hello.
         </motion.h5>

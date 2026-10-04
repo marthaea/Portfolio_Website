@@ -1,5 +1,3 @@
-import { projects } from './projects'
-
 export const profile = {
   name: 'Martha Praise Katusiime',
   roles: ['Front-end Developer', 'Tech Enthusiast', 'Software Developer', 'Artist', 'Writer', 'Animator'],
@@ -57,16 +55,23 @@ export const services = [
   { icon: 'icon-headset', title: 'Consultancy', text: 'More than ready to talk.' },
 ]
 
-// Numbers marked "counted" update themselves as you add projects. The rest are estimates:
-// edit them to whatever you can stand behind.
-const count = (test) => projects.filter(test).length
-
+// "countless" stats count up fast and then settle on the word "Countless".
 export const stats = [
-  { icon: 'icon-pencil-ruler', value: count((p) => p.type === 'Web Development'), title: 'Websites Built' }, // counted
-  { icon: 'icon-users', value: 5, title: 'Happy Clients' }, // Docere, Voiceless Shelter, Timo's Bread, Bullion Events, Sky level Films
-  { icon: 'icon-book', value: count((p) => p.type === 'Creative Writing' && p.spine), title: 'Stories Written' }, // counted
-  { icon: 'icon-light-bulb', value: 150, title: 'Ideas About to unfold' },
-  { icon: 'icon-cup', value: 1700, suffix: '+', title: 'Coding hours' }, // estimate: ~2 hours a day since May 2024
-  { icon: 'icon-clock', value: 7200, title: 'Inspirations' },
+  { icon: 'icon-pencil-ruler', value: 70, suffix: '+', title: 'Websites Built' },
+  { icon: 'icon-users', value: 25, suffix: '+', title: 'Happy Clients' },
+  { icon: 'icon-book', value: 28, suffix: '+', title: 'Stories Written' },
+  { icon: 'icon-light-bulb', countless: true, title: 'Ideas About to unfold' },
+  { icon: 'icon-cup', countless: true, title: 'Coding hours' },
+  { icon: 'icon-clock', countless: true, title: 'Inspirations' },
 ]
+
+// The "Open for freelance work" pill in the hero and the Book a call button in Contact.
+// Swap `url` for a booking page (e.g. cal.com) whenever you have one.
+export const availability = {
+  open: true,
+  text: 'Open for freelance work',
+  where: 'Kampala & remote',
+  cta: 'Book a call',
+  url: 'mailto:marthapraisekatusiime@gmail.com?subject=Let%E2%80%99s%20talk%20about%20a%20project&body=Hi%20Martha%2C%0A%0AI%E2%80%99d%20like%20to%20talk%20about%3A%0A',
+}
 

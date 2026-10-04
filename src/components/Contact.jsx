@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { profile } from '../data/site'
+import { availability, profile } from '../data/site'
 import { SectionIntro } from './Reveal'
 
 const text = 'font-poppins-regular text-[15px] leading-[30px] text-[#b9b9b9]'
@@ -23,6 +23,15 @@ export default function Contact() {
             </motion.div>
           ))}
         </div>
+        {availability.open && (
+          <motion.div className="mt-14 text-center" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }}>
+            <p className="mb-5 flex items-center justify-center gap-3 font-poppins-regular text-[13px] uppercase tracking-[2px] text-white/60">
+              <span className="relative flex h-2.5 w-2.5"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#3ddc84] opacity-70" /><span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#3ddc84]" /></span>
+              {availability.text} · {availability.where}
+            </p>
+            <a href={availability.url} className="btn !bg-pink !text-white hover:!bg-pink-dark">{availability.cta}</a>
+          </motion.div>
+        )}
       </div>
     </section>
   )

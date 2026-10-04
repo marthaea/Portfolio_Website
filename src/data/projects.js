@@ -27,6 +27,9 @@ const list = [
   // ---- Web development ----------------------------------------------------
   { title: 'Sky level Films website', type: 'Web Development', icon: 'film', description: '', url: 'https://focusdirector.netlify.app' },
   { title: 'Bullion Events Website', type: 'Web Development', icon: 'events', description: '', url: 'https://bullionevents.net' },
+  { title: 'Docere Foundation', type: 'Web Development', icon: 'giving', description: '', url: 'https://www.docerefoundation.org' },
+  { title: 'TaleWeave', type: 'Web Development', icon: 'story', description: '', url: 'https://taleweave.netlify.app' },
+  { title: "Timo's Bread Winner", type: 'Web Development', icon: 'kitchen', description: '', url: 'https://timosbreadwinner.com' },
   { title: 'The Voiceless Shelter', type: 'Web Development', icon: 'shelter', description: '', url: 'https://thevoicelesshelter.org' },
   { title: 'Martha Story', type: 'Web Development', icon: 'story', description: '', url: 'https://marthastory.netlify.app', progress: 80, todo: 'Sign-in for some stories, and dark-theme text readability.' },
   { title: 'Galaxy Quest', type: 'Web Development', icon: 'galaxy', description: '', url: 'https://galaxyquest.netlify.app' },

@@ -10,6 +10,7 @@ npm run build    # production build in dist/
 
 ## Editing content
 - `src/data/site.js` — bio, skills, resume, services, stats, contact details, social links
+- `src/data/caseStudies.js` — the three case studies; `src/data/notes.js` — the Notes section
 - `src/data/projects.js` — everything in the portfolio grid and the bookshelf. Optional fields: `progress` + `todo` (shows an "In progress" badge), `excerpt` (array of paragraphs for "Peek Inside"), `spine` (colour of the book on the shelf)
 
 ### Adding a project (e.g. a new Netlify site)
