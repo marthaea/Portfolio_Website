@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { SectionIntro } from './Reveal'
 
@@ -172,6 +172,15 @@ export default function NetworkLab() {
   const [vlan, setVlan] = useState(0)
   const [sel, setSel] = useState(null)
   const [failed, setFailed] = useState(false)
+  // the packets are SMIL animations: pause them while the diagram is off screen so scrolling stays smooth
+  const svgRef = useRef(null)
+  useEffect(() => {
+    const svg = svgRef.current
+    if (!svg || !('IntersectionObserver' in window)) return
+    const io = new IntersectionObserver(([e]) => (e.isIntersecting ? svg.unpauseAnimations() : svg.pauseAnimations()))
+    io.observe(svg)
+    return () => io.disconnect()
+  }, [])
 
   const active = failed ? 'r2' : 'r1'
   const isDown = (id) => failed && id === 'r1'
@@ -253,7 +262,7 @@ export default function NetworkLab() {
 
       <div className="mx-auto w-[94%] max-w-[1040px] border border-white/10 bg-[#1a1a1a]">
         <div className="overflow-x-auto">
-          <svg viewBox="0 0 1000 650" className="block w-full min-w-[720px]" role="group" aria-label="Network diagram">
+          <svg ref={svgRef} viewBox="0 0 1000 650" className="block w-full min-w-[720px]" role="group" aria-label="Network diagram">
             <defs>
               <pattern id="lab-grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0 H0 V40" fill="none" stroke="#fff" strokeOpacity=".04" /></pattern>
             </defs>

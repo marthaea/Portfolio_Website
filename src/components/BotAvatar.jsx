@@ -11,10 +11,8 @@ const PINK = '#ff2e83'
 const PINK_DARK = '#c8005a'
 
 export default function BotAvatar({ waving = false, size = 120, className = '' }) {
-  const typing = (delay) => ({
-    animate: waving && delay > 0 ? { y: 0 } : { y: [0, -2.5, 0, -1.5, 0] },
-    transition: { duration: 0.7, delay, repeat: Infinity, ease: 'easeInOut' },
-  })
+  // typing, breathing and blinking are CSS loops (see .loop-* in index.css) so they stay cheap on phones
+  const typing = (delay) => ({ className: 'loop loop-type', style: { animationDelay: `${delay}s` } })
 
   return (
     <svg viewBox="0 0 160 160" width={size} height={size} className={className} aria-hidden>
@@ -31,7 +29,7 @@ export default function BotAvatar({ waving = false, size = 120, className = '' }
         <circle cx="30" cy="40" r="3" fill="#ff8fbd" opacity=".5" /><circle cx="134" cy="52" r="2" fill="#ff8fbd" opacity=".5" />
 
         {/* gentle breathing for the whole figure */}
-        <motion.g animate={{ y: [0, -1.2, 0] }} transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}>
+        <g className="loop loop-breathe">
           {/* body: pink top with puff sleeves */}
           <path d="M34 162 C34 134 48 118 80 116 C112 118 126 134 126 162 Z" fill={PINK} />
           <path d="M66 117 C70 126 90 126 94 117" fill="none" stroke={PINK_DARK} strokeWidth="2.4" strokeLinecap="round" />
@@ -56,10 +54,10 @@ export default function BotAvatar({ waving = false, size = 120, className = '' }
 
             {/* brows, eyes (blinking), nose, smile, cheeks */}
             <path d="M68 72 C70 70 74 70 76 71 M84 71 C86 70 90 70 92 72" stroke={HAIR} strokeWidth="1.8" strokeLinecap="round" fill="none" />
-            <motion.g animate={{ scaleY: [1, 1, 0.1, 1, 1] }} transition={{ duration: 4.2, times: [0, 0.9, 0.93, 0.96, 1], repeat: Infinity }} style={{ transformBox: 'fill-box', transformOrigin: 'center' }}>
+            <g className="loop loop-blink">
               <ellipse cx="72" cy="78" rx="2.4" ry="3" fill="#1a0f0a" /><ellipse cx="88" cy="78" rx="2.4" ry="3" fill="#1a0f0a" />
               <circle cx="72.8" cy="77" r=".8" fill="#fff" /><circle cx="88.8" cy="77" r=".8" fill="#fff" />
-            </motion.g>
+            </g>
             <path d="M79 82 C78 86 79 88 82 88" stroke={SKIN_DARK} strokeWidth="1.4" fill="none" strokeLinecap="round" />
             <path d="M73 92 C77 96 84 96 88 92" stroke="#7a1f3d" strokeWidth="2" fill="none" strokeLinecap="round" />
             <circle cx="67" cy="88" r="3.4" fill="#ff5c9d" opacity=".35" /><circle cx="93" cy="88" r="3.4" fill="#ff5c9d" opacity=".35" />
@@ -72,9 +70,9 @@ export default function BotAvatar({ waving = false, size = 120, className = '' }
           <path d="M80 138 C74 133 75 127 78.5 128 C79.5 128.5 80 130 80 130 C80 130 80.5 128.5 81.5 128 C85 127 86 133 80 138 Z" fill={PINK} />
 
           {/* typing hands peeking out at the sides of the lid */}
-          <motion.ellipse cx="44" cy="148" rx="7" ry="5" fill={SKIN} {...typing(0)} />
+          <ellipse cx="44" cy="148" rx="7" ry="5" fill={SKIN} {...typing(0)} />
           <motion.g animate={{ opacity: waving ? 0 : 1 }} transition={{ duration: 0.2, delay: waving ? 0 : 0.45 }}>
-            <motion.ellipse cx="116" cy="148" rx="7" ry="5" fill={SKIN} {...typing(0.35)} />
+            <ellipse cx="116" cy="148" rx="7" ry="5" fill={SKIN} {...typing(-0.35)} />
           </motion.g>
 
           {/* the waving arm: grows from her right shoulder (the puffed sleeve), waves from the elbow, then lowers.
@@ -109,7 +107,7 @@ export default function BotAvatar({ waving = false, size = 120, className = '' }
               </motion.g>
             )}
           </AnimatePresence>
-        </motion.g>
+        </g>
 
       </g>
       <circle cx="80" cy="80" r="78" fill="none" stroke="#fff" strokeWidth="3" />

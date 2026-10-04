@@ -51,7 +51,7 @@ export default function Services() {
             style={{ gridTemplateColumns: `repeat(${perPage}, minmax(0, 1fr))` }}
           >
             {items.map((s, i) => (
-              <motion.div key={s.title} className="px-[30px] pb-3" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 + i * 0.1, duration: 0.6 }} whileHover={{ y: -6 }}>
+              <motion.div key={s.title} className="px-[30px] pb-3" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 + i * 0.05, duration: 0.45 }} whileHover={{ y: -6 }}>
                 <span className="mb-[21px] inline-block"><i className={`${s.icon} text-[54px] text-pink`} aria-hidden /></span>
                 <h3 className="mb-[18px] font-poppins-semibold text-[20px] leading-[1.5] text-white">{s.title}</h3>
                 <p className="text-white/60">{s.text}</p>

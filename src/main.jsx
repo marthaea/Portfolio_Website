@@ -21,5 +21,5 @@ if (preloader) {
   setTimeout(() => {
     preloader.classList.add('is-done')
     setTimeout(() => preloader.remove(), 400)
-  }, 700)
+  }, 350)
 }

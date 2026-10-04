@@ -37,7 +37,7 @@ export default function About() {
                   className="flex flex-wrap gap-2"
                   initial="hidden"
                   whileInView="show"
-                  viewport={{ once: true, margin: '-30px' }}
+                  viewport={{ once: true, amount: 0.15 }}
                   variants={{ show: { transition: { staggerChildren: 0.035 } } }}
                 >
                   {items.map((t) => (

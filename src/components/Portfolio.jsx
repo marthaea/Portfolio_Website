@@ -17,12 +17,12 @@ function Item({ p, onOpen, index }) {
       className="group relative overflow-hidden"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.8, delay: (index % 2) * 0.1, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.55, delay: (index % 2) * 0.06, ease: [0.16, 1, 0.3, 1] }}
     >
       <Thumb p={p} />
       {p.progress < 100 && (
-        <span className="pointer-events-none absolute top-4 left-4 z-[2] flex items-center gap-2 rounded-full bg-black/70 px-3 py-1 font-poppins-bold text-[10px] uppercase leading-5 tracking-[2px] text-white backdrop-blur-sm">
+        <span className="pointer-events-none absolute top-4 left-4 z-[2] flex items-center gap-2 rounded-full bg-black/70 px-3 py-1 font-poppins-bold text-[10px] uppercase leading-5 tracking-[2px] text-white">
           <span className="inline-block h-2 w-2 animate-pulse rounded-full bg-pink" />In progress
         </span>
       )}

@@ -8,14 +8,14 @@ const ease = [0.22, 1, 0.36, 1]
 const up = (i) => ({
   initial: { opacity: 0, y: 36 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.9, delay: 0.3 + i * 0.15, ease },
+  transition: { duration: 0.6, delay: 0.15 + i * 0.08, ease },
 })
 
 export default function Intro() {
   return (
     <section
       id="intro"
-      className="relative flex h-screen min-h-[600px] w-full items-center justify-center bg-ink bg-cover bg-fixed bg-[position:center_bottom] text-center min-[769px]:min-h-[660px] min-[1025px]:min-h-[720px]"
+      className="relative flex h-[100svh] min-h-[600px] w-full items-center justify-center bg-ink bg-cover min-[1025px]:bg-fixed bg-[position:center_bottom] text-center min-[769px]:min-h-[660px] min-[1025px]:min-h-[720px]"
       style={{ backgroundImage: `url(${asset('/images/intro-bg.webp')})` }}
     >
       <div className="absolute inset-0 bg-[#111] opacity-[.85]" />
@@ -25,7 +25,7 @@ export default function Intro() {
           <motion.a
             {...up(-1)}
             href={availability.url}
-            className="group mb-5 inline-flex max-w-full flex-wrap items-center justify-center gap-x-3 gap-y-0 rounded-full border border-white/20 bg-white/5 px-5 py-1.5 font-poppins-regular text-[12px] uppercase leading-6 tracking-[2px] !text-white backdrop-blur-sm hover:border-pink-dark hover:bg-white/10"
+            className="group mb-5 inline-flex max-w-full flex-wrap items-center justify-center gap-x-3 gap-y-0 rounded-full border border-white/20 bg-white/5 px-5 py-1.5 font-poppins-regular text-[12px] uppercase leading-6 tracking-[2px] !text-white hover:border-pink-dark hover:bg-white/10"
           >
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#3ddc84] opacity-70" />

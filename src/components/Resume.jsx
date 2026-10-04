@@ -16,8 +16,8 @@ function Timeline({ title, entries, Icon }) {
             className="timeline-block"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.8, ease }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.55, ease }}
           >
             <motion.div className="timeline-ico" initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true }} transition={{ type: 'spring', stiffness: 260, damping: 18, delay: 0.15 }}>
               <Icon />
