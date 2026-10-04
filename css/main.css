@@ -2597,3 +2597,9 @@ footer .copyright span:last-child::after {
 }
 
 /*# sourceMappingURL=main.css.map */
+/* skip link + keyboard focus (accessibility) */
+.skip-link { position: absolute; left: -9999px; top: 0; z-index: 10000; padding: 10px 16px; background: #FF0077; color: #fff; }
+.skip-link:focus { left: 0; }
+a:focus-visible, button:focus-visible { outline: 2px solid #FF0077; outline-offset: 3px; }
+.info-list a, .contact-info a { color: inherit; border-bottom: 1px dotted currentColor; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
