@@ -13,22 +13,13 @@ npm run build    # production build in dist/
 - `src/data/projects.js` — everything in the portfolio grid
 
 ### Adding a project (e.g. a new Netlify site)
-Add one object to `src/data/projects.js`:
+Add one object to `src/data/projects.js` (web projects use a hand-drawn icon from `src/components/SketchIcon.jsx`; pick any `icon` name from that file):
 
 ```js
-{ title: 'My App', category: 'Web', url: 'https://my-app.netlify.app',
-  image: '/images/portfolio/my-app.webp', description: 'What it is.', tech: ['React', 'Netlify'] },
+{ title: 'My App', type: 'Web Development', icon: 'browser', url: 'https://my-app.netlify.app', description: '' },
 ```
-Put the screenshot in `public/images/portfolio/` (WebP/JPG, ~900px wide). If the image is missing, a title tile is shown instead.
+To use a screenshot instead of an icon, add `image: ...` (a file under `public/`). Without an image the icon tile is shown.
 The filter tabs are built from the `type` values, so a new type gets its own tab automatically.
-
-### Screenshots of live sites
-Netlify entries point at `public/images/sites/<name>.webp`. To capture them from the live URLs:
-```bash
-npm i -D playwright && npx playwright install chromium
-npm run screenshots            # only sites without an image yet
-npm run screenshots -- --all   # re-capture everything
-```
 
 ## Deploying
 Connected to Netlify: `netlify.toml` sets build command `npm run build` and publish dir `dist`.

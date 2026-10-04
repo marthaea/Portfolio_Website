@@ -3,12 +3,13 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { projects } from '../data/projects'
 import { asset } from '../asset'
 import { Reveal, SectionIntro } from './Reveal'
+import SketchIcon from './SketchIcon'
 
-function Tile({ title, icon = 'icon-window', large }) {
+function Tile({ title, icon, large, hideTitle }) {
   return (
-    <div className="flex aspect-[4/3] w-full flex-col items-center justify-center bg-[#313131] p-8 text-center transition-opacity duration-500 group-hover:opacity-0">
-      <i className={`${icon} ${large ? 'text-[72px]' : 'text-[54px]'} text-pink`} aria-hidden />
-      <span className={`mt-4 font-poppins-semibold text-white ${large ? 'text-[28px]' : 'text-[22px]'}`}>{title}</span>
+    <div className="flex aspect-[4/3] w-full flex-col items-center justify-center bg-[radial-gradient(circle_at_50%_38%,#3f3f3f,#262626)] p-8 text-center transition-opacity duration-500 group-hover:opacity-0">
+      <SketchIcon name={icon} size={large ? 220 : 170} />
+      {!hideTitle && <span className="mt-3 font-poppins-semibold text-[21px] text-white">{title}</span>}
     </div>
   )
 }
@@ -73,7 +74,7 @@ function Modal({ p, onClose }) {
             ? <video src={asset(p.video)} controls autoPlay muted playsInline className="block w-full" />
             : p.image
               ? <Picture src={p.image} alt={p.title} icon={p.icon} large className="block w-full align-bottom" />
-              : <Tile title={p.title} icon={p.icon} large />}
+              : <Tile title={p.title} icon={p.icon} large hideTitle />}
         </div>
         <div className="description-box">
           <h4>{p.title}</h4>
