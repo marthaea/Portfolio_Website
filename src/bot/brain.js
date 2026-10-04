@@ -3,7 +3,7 @@
  * No AI service is involved. Messages are normalised, split into words and each word is
  * matched loosely (one or two typos allowed), so "waht servcies" still finds "services".
  */
-import { availability, education, profile, services, stats } from '../data/site.js'
+import { availability, education, facts, profile, services } from '../data/site.js'
 import { projects } from '../data/projects.js'
 import { caseStudies } from '../data/caseStudies.js'
 import { faqs } from './faqs.js'
@@ -66,8 +66,6 @@ const hit = (words, keys) => {
 const email = profile.email[0]
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)]
 const stories = projects.filter((p) => p.type === 'Creative Writing' && p.spine).map((p) => p.title)
-const webCount = stats.find((s) => s.title === 'Websites Built')
-const clientCount = stats.find((s) => s.title === 'Happy Clients')
 const bookCall = { label: availability.cta, href: availability.url }
 const caseLink = { label: 'Case studies', href: '#case-studies' }
 const listServices = services.map((s) => s.title).join(', ')
@@ -164,7 +162,7 @@ const intents = [
   { id: 'network', groups: [['network', 'networking', 'networks', 'vlan', 'vlans', 'cisco', 'packet', 'tracer', 'router', 'routing', 'switch', 'switches', 'server', 'servers', 'automation', 'automate', 'infrastructure', 'wifi', 'wireless', 'enterprise', 'sysadmin']],
     answer: () => ({ text: 'Martha does advanced and enterprise networking, server systems and automation. She has designed and documented a multi-site enterprise network in Cisco Packet Tracer with VLANs, inter-VLAN routing and wireless.\nThere’s an interactive version of it on this page.', links: [{ label: 'Open the Network Lab', href: '#network-lab' }] }) },
   { id: 'work', groups: [['project', 'projects', 'portfolio', 'work', 'websites', 'sites', 'built', 'examples', 'samples', 'clients', 'client', 'made', 'apps']], boost: ['projects', 'portfolio', 'work', 'show', 'see'],
-    answer: () => ({ text: `Martha has built ${webCount.value}${webCount.suffix} websites for ${clientCount.value}${clientCount.suffix} happy clients. Highlights include Docere Foundation, The Voiceless Pet Shelter, Galaxy Quest (a NASA exoplanet explorer) and Link Guardian.`, links: [{ label: 'Portfolio', href: '#portfolio' }, caseLink] }) },
+    answer: () => ({ text: `Martha has built ${facts.websites} websites for ${facts.clients} happy clients. Highlights include Docere Foundation, The Voiceless Pet Shelter, Galaxy Quest (a NASA exoplanet explorer) and Link Guardian.`, links: [{ label: 'Portfolio', href: '#portfolio' }, caseLink] }) },
   { id: 'linkguardian', weight: 1.5, groups: [['guardian', 'security', 'malicious', 'virus', 'phishing', 'safe', 'scam', 'cybersecurity', 'link', 'links', 'url']],
     answer: () => { const c = cs('guardian'); return { text: `${c.title}: ${c.problem} ${c.built.join(' ')}`, links: [{ label: 'Visit', href: c.url }, caseLink] } } },
   { id: 'shelter', weight: 1.5, groups: [['voiceless', 'shelter', 'pet', 'pets', 'adopt', 'adoption', 'animal', 'animals', 'dog', 'cat', 'puppy', 'kitten']],
@@ -174,7 +172,7 @@ const intents = [
   { id: 'galaxy', weight: 1.5, groups: [['galaxy', 'nasa', 'space', 'exoplanet', 'exoplanets', 'planet', 'planets', 'quest', 'stars', 'astronomy']],
     answer: () => ({ text: 'Galaxy Quest is a NASA exoplanet explorer. Martha built the front end on NASA’s Exoplanet Archive API, with a data-rich interface for exploring planets beyond our solar system.', links: [{ label: 'Visit', href: 'https://galaxyquest.netlify.app' }] }) },
   { id: 'stories', groups: [['story', 'stories', 'write', 'writing', 'writer', 'book', 'books', 'wattpad', 'novel', 'novels', 'read', 'reading', 'fiction', 'author', 'poem', 'poems', 'poetry', 'shelf', 'bookshelf', 'bookshelves']],
-    answer: () => ({ text: `Martha is a fiction writer on Wattpad with ${stats.find((s) => s.title === 'Stories Written').value}+ stories, including ${stories.slice(-6).join(', ')}.\nPick one off the bookshelf to read a peek.`, links: [{ label: 'Bookshelf', href: '#stories' }] }) },
+    answer: () => ({ text: `Martha is a fiction writer on Wattpad with ${facts.stories} stories, including ${stories.slice(-6).join(', ')}.\nPick one off the bookshelf to read a peek.`, links: [{ label: 'Bookshelf', href: '#stories' }] }) },
   { id: 'art', groups: [['art', 'artist', 'draw', 'drawing', 'drawings', 'sketch', 'animation', 'animate', 'animator', 'paint', 'painting', 'illustration', 'illustrator', 'toon', 'tvpaint', 'graphic', 'graphics', 'logo', 'brand']],
     answer: () => ({ text: 'Martha draws, animates and designs. She works in Toon Boom Harmony and TVPaint, interned as an animator at Musinguzi Studios in May 2025, and does logo and brand design.', links: [{ label: 'See her art', href: '#portfolio' }] }) },
   { id: 'education', groups: [['study', 'studying', 'studies', 'school', 'university', 'uni', 'degree', 'education', 'ucu', 'college', 'student', 'course', 'graduate', 'qualification', 'qualifications']],

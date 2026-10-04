@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { MotionConfig } from 'framer-motion'
+import '@fontsource/mrs-saint-delafield'
 import './index.css'
 import App from './App.jsx'
 

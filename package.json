@@ -11,6 +11,7 @@
     "test:bot": "node scripts/test-bot.mjs"
   },
   "dependencies": {
+    "@fontsource/mrs-saint-delafield": "^5.3.0",
     "framer-motion": "^14.0.0",
     "lucide-react": "^1.51.0",
     "react": "^19.3.0",
