@@ -1,21 +1,7 @@
-import { motion, useInView } from 'framer-motion'
-import { useRef } from 'react'
+import { motion } from 'framer-motion'
 import { profile } from '../data/site'
 import { asset } from '../asset'
 import { Reveal, SectionIntro } from './Reveal'
-
-function SkillBar({ name, percent }) {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-40px' })
-  return (
-    <li ref={ref}>
-      <motion.div className="progress" initial={{ width: 0 }} animate={{ width: inView ? `${percent}%` : 0 }} transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}>
-        <motion.span initial={{ opacity: 0 }} animate={{ opacity: inView ? 1 : 0 }} transition={{ delay: 0.9, duration: 0.4 }}>{percent}%</motion.span>
-      </motion.div>
-      <strong>{name}</strong>
-    </li>
-  )
-}
 
 export default function About() {
   return (
@@ -43,11 +29,30 @@ export default function About() {
         </Reveal>
         <Reveal delay={0.1} className="px-5">
           <h3 className="max-[768px]:text-center">Skills</h3>
-          <p className="mb-[21px]">
-            {profile.skillsText.map(([k, v]) => (<span key={k} className="block">{k}: {v}</span>))}
-          </p>
-          <ul className="skill-bars mt-[60px] mb-[30px]">
-            {profile.skillBars.map(([name, pct]) => <SkillBar key={name} name={name} percent={pct} />)}
+          <ul className="mt-[30px] mb-[30px] space-y-[26px]">
+            {profile.skillGroups.map(([group, items]) => (
+              <li key={group}>
+                <strong className="mb-2 block font-poppins-bold text-[13px] uppercase leading-6 tracking-[2px] text-[#313131]">{group}</strong>
+                <motion.ul
+                  className="flex flex-wrap gap-2"
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, margin: '-30px' }}
+                  variants={{ show: { transition: { staggerChildren: 0.035 } } }}
+                >
+                  {items.map((t) => (
+                    <motion.li
+                      key={t}
+                      variants={{ hidden: { opacity: 0, y: 10, scale: 0.92 }, show: { opacity: 1, y: 0, scale: 1 } }}
+                      whileHover={{ y: -2 }}
+                      className="border border-[#d8d8d8] px-3 py-[3px] font-poppins-regular text-[13px] leading-[24px] text-[#6e6e6e] transition-colors hover:border-pink hover:text-pink"
+                    >
+                      {t}
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              </li>
+            ))}
           </ul>
         </Reveal>
       </div>

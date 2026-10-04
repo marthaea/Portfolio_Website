@@ -49,6 +49,9 @@ const list = [
   { title: 'Andrea', type: 'Creative Writing', spine: '#191713', image: '/images/posters/andrea.webp', description: 'Story poster.', url: 'https://www.wattpad.com/story/395974985-andrea' },
   { title: 'Glass People', type: 'Creative Writing', spine: '#767676', image: '/images/posters/glass-people.webp', description: 'Story poster.', url: 'https://www.wattpad.com/story/404563183-glass-people', excerpt: ["\"Typical modern day society’s hatred for anything genuine.\"", "— someone"] },
   { title: 'Singing to the Shadows', type: 'Creative Writing', spine: '#b48759', image: '/images/posters/singing-to-the-shadows.webp', description: 'Story poster.', url: 'https://www.wattpad.com/story/407446479-%F0%9D%95%8A%F0%9D%95%80%E2%84%95%F0%9D%94%BE%F0%9D%95%80%E2%84%95%F0%9D%94%BE-%F0%9D%95%8B%F0%9D%95%86-%F0%9D%95%8B%E2%84%8D%F0%9D%94%BC-%F0%9D%95%8A%E2%84%8D%F0%9D%94%B8%F0%9D%94%BB%F0%9D%95%86%F0%9D%95%8E%F0%9D%95%8A', excerpt: ["Some invitations should never be accepted."] },
+  { title: 'Passenger', type: 'Creative Writing', spine: '#5d5c5c', image: '/images/posters/passenger.webp', description: '', url: 'https://www.wattpad.com/story/393699412-passenger' },
+  { title: 'Still Standing', type: 'Creative Writing', spine: '#928b81', image: '/images/posters/still-standing.webp', description: '', url: 'https://www.wattpad.com/story/398078248-still-standing' },
+  { title: 'Turbulent Skies', type: 'Creative Writing', spine: '#46453c', image: '/images/posters/turbulent-skies.webp', description: '', url: 'https://www.wattpad.com/story/393328594-turbulent-skies' },
 ]
 
 // Wattpad descriptions are pulled in by `npm run fetch-stories` (see scripts/fetch-wattpad.mjs);

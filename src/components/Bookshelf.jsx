@@ -6,7 +6,7 @@ import { SectionIntro } from './Reveal'
 import ProjectModal from './ProjectModal'
 
 const books = projects.filter((p) => p.type === 'Creative Writing' && p.spine && p.image)
-const PER_SHELF = 6
+const PER_SHELF = 7
 
 function hash(str) {
   let h = 0

@@ -8,7 +8,7 @@ export default function Contact() {
   const cols = [
     { icon: 'icon-pin', title: 'Where to find me', lines: profile.address.map((l) => <span key={l}>{l}<br /></span>) },
     { icon: 'icon-mail', title: 'Email Me At', lines: profile.email.map((m) => <a key={m} href={`mailto:${m}`} className="!text-[#b9b9b9] hover:!text-pink break-all">{m}<br /></a>) },
-    { icon: 'icon-phone', title: 'Call Me At', lines: profile.phones.map(([k, v]) => <a key={k} href={`tel:+256${v.slice(1)}`} className="!text-[#b9b9b9] hover:!text-pink">{k}: {v}<br /></a>) },
+    { icon: 'icon-share', title: 'Find Me Online', lines: profile.socials.filter((x) => ['GitHub', 'LinkedIn', 'Instagram'].includes(x.name)).map((x) => <a key={x.name} href={x.url} target="_blank" rel="noopener noreferrer" className="!text-[#b9b9b9] hover:!text-pink">{x.name}<br /></a>) },
   ]
   return (
     <section id="contact" className="bg-ink pt-[120px] pb-[72px]">

@@ -1,3 +1,7 @@
 [build]
   command = "npm run fetch-stories && npm run build"
   publish = "dist"
+
+# Vite 8 needs Node 20.19+ / 22.12+; Netlify's default can be older.
+[build.environment]
+  NODE_VERSION = "22"
