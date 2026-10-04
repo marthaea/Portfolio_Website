@@ -1,12 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { projects } from '../data/projects'
 import { asset } from '../asset'
 import { SectionIntro } from './Reveal'
 import ProjectModal from './ProjectModal'
+import { Bookend, BookStack, Candle, FlowerVase, Mug, PaneFrame, Plant } from './ShelfObjects'
 
 const books = projects.filter((p) => p.type === 'Creative Writing' && p.spine && p.image)
-const PER_SHELF = 7
 
 function hash(str) {
   let h = 0
@@ -43,6 +43,7 @@ function Book({ p, index, onOpen }) {
       whileHover={{ zIndex: 20 }}
       whileFocus={{ zIndex: 20 }}
     >
+      <span aria-hidden className="pointer-events-none absolute -bottom-[3px] left-[2px] right-[-6px] h-[10px] rounded-full bg-black/60 blur-[5px]" />
       <motion.div
         className="absolute inset-0"
         style={{ transformStyle: 'preserve-3d', transform: `translateZ(${-depth / 2}px)` }}
@@ -87,9 +88,60 @@ function Book({ p, index, onOpen }) {
   )
 }
 
+function MugOnStack() {
+  return (
+    <div className="relative h-[62px] w-[160px] shrink-0">
+      <BookStack className="absolute inset-x-0 bottom-0 w-full" />
+      <Mug className="absolute bottom-[44px] left-[48px] w-[58px]" />
+    </div>
+  )
+}
+
+const decor = [
+  { left: [<FlowerVase key="v" className="w-[104px] shrink-0" />], right: [<MugOnStack key="m" />] },
+  { left: [<Candle key="c" className="w-[54px] shrink-0" />, <Plant key="p" className="w-[92px] shrink-0" />], right: [<PaneFrame key="f" className="w-[92px] shrink-0" />] },
+  { left: [<Plant key="p" className="w-[96px] shrink-0" />], right: [<Candle key="c" className="w-[54px] shrink-0" />, <BookStack key="s" className="w-[150px] shrink-0" colors={['#404546', '#9d9996', '#5b5860']} />] },
+  { left: [<FlowerVase key="v" className="w-[96px] shrink-0" />], right: [<MugOnStack key="m" />] },
+]
+
+// how many books per shelf, and how much decoration fits, by screen width
+function useShelfLayout() {
+  const get = () => {
+    const w = typeof window === 'undefined' ? 1200 : window.innerWidth
+    return w >= 940 ? { per: 7, sides: 2 } : w >= 640 ? { per: 5, sides: 1 } : { per: 3, sides: 1, small: true }
+  }
+  const [layout, setLayout] = useState(get)
+  useEffect(() => {
+    const on = () => setLayout(get())
+    window.addEventListener('resize', on)
+    return () => window.removeEventListener('resize', on)
+  }, [])
+  return layout
+}
+
+function FairyLights() {
+  const xs = Array.from({ length: 13 }, (_, i) => i / 12)
+  return (
+    <svg viewBox="0 0 1000 70" preserveAspectRatio="none" className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[60px] w-full" aria-hidden>
+      <path d="M0 6 C250 62 750 62 1000 6" fill="none" stroke="#1a120d" strokeWidth="2" />
+      {xs.map((t, i) => {
+        const x = t * 1000
+        const y = 6 + 4 * 3 * 14 * t * (1 - t) * 1.04
+        return (
+          <g key={i}>
+            <motion.circle cx={x} cy={y + 6} r="14" fill="#ffc46b" opacity=".18" animate={{ opacity: [0.1, 0.34, 0.1] }} transition={{ duration: 2.6, delay: (i % 4) * 0.5, repeat: Infinity }} />
+            <motion.circle cx={x} cy={y + 6} r="4.6" fill="#ffd98a" animate={{ opacity: [0.55, 1, 0.55] }} transition={{ duration: 2.6, delay: (i % 4) * 0.5, repeat: Infinity }} />
+          </g>
+        )
+      })}
+    </svg>
+  )
+}
+
 export default function Bookshelf() {
   const [active, setActive] = useState(null)
-  const shelves = Array.from({ length: Math.ceil(books.length / PER_SHELF) }, (_, i) => books.slice(i * PER_SHELF, (i + 1) * PER_SHELF))
+  const { per, sides, small } = useShelfLayout()
+  const shelves = Array.from({ length: Math.ceil(books.length / per) }, (_, i) => books.slice(i * per, (i + 1) * per))
   let n = 0
 
   return (
@@ -98,19 +150,40 @@ export default function Bookshelf() {
         <SectionIntro eyebrow="Bookshelf" title="Stories on my shelf." lead="Hover a book to turn it, click to open it." />
       </div>
 
-      <div className="mx-auto w-[94%] max-w-[860px] rounded-[3px] bg-[#1b1b1b] px-4 pt-10 shadow-[inset_0_0_40px_rgb(0_0_0/.7)] sm:px-10">
-        {shelves.map((row, r) => (
-          <div key={r} className="mb-10 last:mb-0">
-            <div className="flex items-end justify-center gap-[5px] sm:gap-2" style={{ minHeight: 290 }}>
-              {row.map((p) => <Book key={p.title} p={p} index={n++} onOpen={setActive} />)}
-            </div>
-            {/* the plank */}
-            <div className="relative -mx-4 h-[16px] bg-gradient-to-b from-[#444] to-[#2a2a2a] shadow-[0_10px_18px_rgb(0_0_0/.55)] sm:-mx-10">
-              <span className="absolute inset-x-0 top-0 h-[2px] bg-pink/70" />
-            </div>
-          </div>
-        ))}
-        <div className="h-6" />
+      {/* wooden cabinet */}
+      <div
+        className="relative mx-auto w-[94%] max-w-[920px] rounded-[8px] p-[12px] sm:p-[16px]"
+        style={{ background: 'linear-gradient(180deg,#7b583d,#563a28 40%,#3f2a1d)', boxShadow: '0 40px 70px -20px rgb(0 0 0 / .55), inset 0 2px 0 rgb(255 255 255 / .18)' }}
+      >
+        <div
+          className="relative overflow-hidden rounded-[3px] px-3 pt-[64px] pb-3 sm:px-8"
+          style={{
+            background:
+              'radial-gradient(ellipse 70% 40% at 50% 0%, rgb(255 196 120 / .22), transparent 70%), repeating-linear-gradient(90deg, rgb(255 255 255 / .018) 0 2px, transparent 2px 9px), linear-gradient(180deg,#2c2019,#1d1511)',
+            boxShadow: 'inset 0 0 60px rgb(0 0 0 / .85), inset 0 6px 14px rgb(0 0 0 / .6)',
+          }}
+        >
+          <FairyLights />
+          {shelves.map((row, r) => {
+            const set = decor[r % decor.length]
+            const left = small ? set.left.slice(0, 1) : set.left
+            return (
+              <div key={r} className="mb-9 last:mb-3">
+                <div className="flex items-end justify-center gap-[5px] sm:gap-2" style={{ minHeight: 300 }}>
+                  <div className={`flex shrink-0 items-end gap-3 ${small ? '[&_svg]:!w-[56px]' : ''}`}>{left}</div>
+                  {row.map((p) => <Book key={p.title} p={p} index={n++} onOpen={setActive} />)}
+                  <Bookend className="h-[92px] w-[26px] shrink-0 self-end" />
+                  {sides === 2 && <div className="ml-2 flex shrink-0 items-end gap-3">{set.right}</div>}
+                </div>
+                {/* the plank */}
+                <div className="relative -mx-3 h-[22px] sm:-mx-8" style={{ background: 'linear-gradient(180deg,#b08660,#8a6544 45%,#5a3d28)', boxShadow: '0 16px 24px rgb(0 0 0 / .6)' }}>
+                  <span className="absolute inset-x-0 top-0 h-[2px] bg-white/25" />
+                  <span className="absolute inset-x-0 bottom-0 h-[5px] bg-black/35" />
+                </div>
+              </div>
+            )
+          })}
+        </div>
       </div>
       <AnimatePresence>{active && <ProjectModal p={active} onClose={() => setActive(null)} />}</AnimatePresence>
     </section>

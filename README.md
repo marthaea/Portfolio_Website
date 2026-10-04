@@ -22,6 +22,9 @@ Add one object to `src/data/projects.js` (web projects use a hand-drawn icon fro
 To use a screenshot instead of an icon, add `image: ...` (a file under `public/`). Without an image the icon tile is shown.
 The filter tabs are built from the `type` values, so a new type gets its own tab automatically.
 
+## CV
+`public/cv.pdf` is the one-page CV shown behind "Download CV". Its editable source is `cv/cv.html` (open it in a browser and print to PDF, A4, no margins, background graphics on).
+
 ## Deploying
 Connected to Netlify: `netlify.toml` sets build command `npm run build` and publish dir `dist`.
 
