@@ -99,7 +99,7 @@ const intents = [
     answer: () => ({ text: 'I’m Martha’s assistant: a drawing of her who knows all about her work. I’m not the real Martha, though. For anything personal or detailed, contact her to book an appointment.', links: [bookCall] }) },
   { id: 'joke', small: true, groups: [['joke', 'jokes', 'funny', 'laugh', 'pun']],
     answer: () => ({ text: pick(jokes) }) },
-  { id: 'colour', small: true, groups: [['favourite', 'favorite', 'fav', 'colour', 'color', 'pink']],
+  { id: 'colour', small: true, groups: [['colour', 'color', 'colours', 'colors', 'pink']], boost: ['favourite', 'favorite', 'fav'],
     answer: () => ({ text: 'Pink, obviously. Look at the outfit. 💗' }) },
   { id: 'love', small: true, groups: [['love', 'like', 'awesome', 'amazing', 'beautiful', 'cool', 'nice', 'wow'], ['site', 'website', 'portfolio', 'you', 'bot', 'this', 'work']],
     answer: () => ({ text: 'Aww, thank you! Martha will be thrilled. Want to see more of her work?', links: [{ label: 'Portfolio', href: '#portfolio' }, caseLink] }) },
