@@ -25,7 +25,7 @@ export default function About() {
           <Reveal><h5>About</h5></Reveal>
           <Reveal delay={0.1}><h1>Let me introduce myself.</h1></Reveal>
           <Reveal delay={0.2} className="mt-[42px] text-left">
-            <img src={asset('/images/profile.webp')} alt="Profile Picture" width="900" height="1200" loading="lazy" className="block h-auto w-full object-cover" />
+            <img src={asset('/images/profile.webp')} alt="Profile Picture" width="509" height="706" loading="lazy" className="block h-auto w-full object-cover" />
             <p className="lead mt-[18px] !text-left">{profile.lead}</p>
           </Reveal>
         </div>
