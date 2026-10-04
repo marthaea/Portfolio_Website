@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Check, Copy } from 'lucide-react'
 import { FaGithub, FaInstagram, FaLinkedinIn } from 'react-icons/fa'
 import { availability, profile, services } from '../data/site'
@@ -10,22 +10,17 @@ const socialIcon = { LinkedIn: FaLinkedinIn, GitHub: FaGithub, Instagram: FaInst
 
 /** Two bands of huge outlined words drifting in opposite directions. */
 function Marquee({ words, reverse, speed = 38 }) {
-  const reduce = useReducedMotion()
   const row = [...words, ...words]
   return (
     <div className="flex overflow-hidden whitespace-nowrap" aria-hidden>
-      <motion.div
-        className="flex shrink-0 items-center gap-8 pr-8"
-        animate={reduce ? undefined : { x: reverse ? ['-50%', '0%'] : ['0%', '-50%'] }}
-        transition={{ duration: speed, repeat: Infinity, ease: 'linear' }}
-      >
+      <div className={`loop-marquee flex shrink-0 items-center gap-8 pr-8 ${reverse ? 'reverse' : ''}`} style={{ '--marquee-duration': `${speed}s` }}>
         {row.map((w, i) => (
           <span key={i} className="flex items-center gap-8">
             <span className="font-poppins-bold text-[44px] uppercase leading-none tracking-[1px] text-transparent [-webkit-text-stroke:1px_rgb(255_255_255/.22)] sm:text-[72px]">{w}</span>
             <span className="text-[26px] text-pink sm:text-[38px]">✦</span>
           </span>
         ))}
-      </motion.div>
+      </div>
     </div>
   )
 }
@@ -57,7 +52,7 @@ function Postcard() {
       initial={{ opacity: 0, y: 40, rotate: -6 }}
       whileInView={{ opacity: 1, y: 0, rotate: -3 }}
       whileHover={{ rotate: 0, y: -6 }}
-      viewport={{ once: true, margin: '-60px' }}
+      viewport={{ once: true, amount: 0.15 }}
       transition={{ type: 'spring', stiffness: 120, damping: 16 }}
       className="relative mx-auto w-full max-w-[460px] bg-[#fbf8f2] p-6 text-[#313131] shadow-[0_30px_60px_-20px_rgb(0_0_0/.8)] sm:p-8"
     >
@@ -112,7 +107,7 @@ export default function Contact() {
   const words = ['Web Design', 'Networking', 'Stories', 'Animation', 'AI & Chatbots', 'Servers & Automation']
   return (
     <section id="contact" className="relative overflow-hidden bg-ink pt-[90px] pb-[100px]">
-      <div aria-hidden className="pointer-events-none absolute -bottom-40 -left-40 h-[520px] w-[520px] rounded-full bg-pink/15 blur-[120px]" />
+      <div aria-hidden className="pointer-events-none absolute -bottom-40 -left-40 h-[760px] w-[760px] rounded-full bg-[radial-gradient(circle,rgb(255_0_119/.16),transparent_65%)]" />
 
       <div className="space-y-3">
         <Marquee words={words} />
@@ -123,7 +118,7 @@ export default function Contact() {
         <div>
           <motion.p initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="font-poppins-bold text-[14px] uppercase tracking-[4px] text-pink">Contact me</motion.p>
           <motion.h2
-            initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1, duration: 0.7 }}
+            initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.05, duration: 0.5 }}
             className="mt-3 font-poppins-semibold text-[38px] leading-[1.15] text-white sm:text-[52px]"
           >
             Got an idea?<br />Let’s make it

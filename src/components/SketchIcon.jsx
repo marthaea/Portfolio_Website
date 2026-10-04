@@ -12,10 +12,10 @@ const Layer = createContext('stroke')
 
 const draw = {
   hidden: { pathLength: 0, opacity: 0 },
-  show: { pathLength: 1, opacity: 1, transition: { duration: 0.9, ease: 'easeInOut' } },
+  show: { pathLength: 1, opacity: 1, transition: { duration: 0.6, ease: 'easeInOut' } },
 }
 
-const fade = { hidden: { opacity: 0 }, show: { opacity: 0.16, transition: { duration: 0.8, delay: 0.5 } } }
+const fade = { hidden: { opacity: 0 }, show: { opacity: 0.16, transition: { duration: 0.5, delay: 0.3 } } }
 
 /** One stroke. `shade` also gives the shape a tinted back-shadow (use on closed shapes). */
 function P({ d, shade }) {
@@ -181,7 +181,7 @@ export default function SketchIcon({ name = 'browser', size = 112, className = '
       strokeLinejoin="round"
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: '-40px' }}
+      viewport={{ once: true, amount: 0.15 }}
       variants={{ show: { transition: { staggerChildren: 0.12 } } }}
     >
       <defs>

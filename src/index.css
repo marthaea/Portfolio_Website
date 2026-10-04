@@ -104,3 +104,33 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--color-pink); ou
   /* contact */
   .contact-info h5 { color: #ff0077; font-family: var(--font-poppins-bold); font-size: 15px; letter-spacing: 4px; text-transform: uppercase; line-height: 30px; margin-bottom: 12px; }
 }
+
+/* Decorative loops run as CSS animations: the browser handles them cheaply and they don't tie up
+   the main thread while scrolling (which made phones feel shaky). */
+@layer components {
+  .loop { animation-iteration-count: infinite; animation-timing-function: ease-in-out; }
+  .loop-sway { animation-name: sway; transform-box: view-box; }
+  .loop-flicker { animation-name: flicker; animation-duration: 1.6s; transform-box: view-box; transform-origin: 35px 40px; }
+  .loop-glow { animation-name: glow; animation-duration: 2.4s; }
+  .loop-steam { animation-name: steam; animation-duration: 3.2s; animation-timing-function: ease-out; opacity: 0; }
+  .loop-twinkle { animation-name: twinkle; }
+  .loop-breathe { animation-name: breathe; animation-duration: 3.2s; }
+  .loop-type { animation-name: type; animation-duration: 0.7s; transform-box: fill-box; }
+  .loop-blink { animation-name: blink; animation-duration: 4.2s; animation-timing-function: linear; transform-box: fill-box; transform-origin: center; }
+  .loop-dots { animation-name: dots; animation-duration: 0.6s; }
+  .loop-marquee { animation: marquee var(--marquee-duration, 40s) linear infinite; will-change: transform; }
+  .loop-marquee.reverse { animation-direction: reverse; }
+}
+@keyframes sway { 0%, 100% { transform: rotate(calc(var(--sway, 1.6deg) * -1)); } 50% { transform: rotate(var(--sway, 1.6deg)); } }
+@keyframes flicker { 0%, 100% { transform: scale(1, 1); } 25% { transform: scale(0.92, 1.12); } 50% { transform: scale(1.05, 0.94); } 75% { transform: scale(0.96, 1.08); } }
+@keyframes glow { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+@keyframes steam { 0% { opacity: 0; transform: translateY(4px); } 40% { opacity: 0.55; } 100% { opacity: 0; transform: translateY(-14px); } }
+@keyframes twinkle { 0%, 100% { opacity: var(--lo, 0.35); } 50% { opacity: var(--hi, 1); } }
+@keyframes breathe { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.2px); } }
+@keyframes type { 0%, 100% { transform: translateY(0); } 25% { transform: translateY(-2.5px); } 75% { transform: translateY(-1.5px); } }
+@keyframes blink { 0%, 89%, 97%, 100% { transform: scaleY(1); } 93% { transform: scaleY(0.1); } }
+@keyframes dots { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .loop, .loop-marquee { animation: none !important; }
+}

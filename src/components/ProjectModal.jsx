@@ -30,7 +30,7 @@ function Peek({ p }) {
           key={i}
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35 + i * 0.25, duration: 0.7 }}
+          transition={{ delay: 0.2 + i * 0.12, duration: 0.5 }}
           className="!mb-3 font-lora text-[19px] !leading-[1.7] italic !text-[#4a4a4a]"
         >
           {para}

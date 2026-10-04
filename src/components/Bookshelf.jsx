@@ -38,12 +38,12 @@ function Book({ p, index, onOpen }) {
       style={{ width: w, height, perspective: 1100, zIndex: 0 }}
       initial={{ opacity: 0, y: 70 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.8, delay: index * 0.09, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.55, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ zIndex: 20 }}
       whileFocus={{ zIndex: 20 }}
     >
-      <span aria-hidden className="pointer-events-none absolute -bottom-[3px] left-[2px] right-[-6px] h-[10px] rounded-full bg-black/60 blur-[5px]" />
+      <span aria-hidden className="pointer-events-none absolute -bottom-[3px] left-[2px] right-[-6px] h-[10px] rounded-full bg-[radial-gradient(ellipse_at_center,rgb(0_0_0/.6),transparent_70%)]" />
       <motion.div
         className="absolute inset-0"
         style={{ transformStyle: 'preserve-3d', transform: `translateZ(${-depth / 2}px)` }}
@@ -129,8 +129,8 @@ function FairyLights() {
         const y = 6 + 4 * 3 * 14 * t * (1 - t) * 1.04
         return (
           <g key={i}>
-            <motion.circle cx={x} cy={y + 6} r="14" fill="#ffc46b" opacity=".18" animate={{ opacity: [0.1, 0.34, 0.1] }} transition={{ duration: 2.6, delay: (i % 4) * 0.5, repeat: Infinity }} />
-            <motion.circle cx={x} cy={y + 6} r="4.6" fill="#ffd98a" animate={{ opacity: [0.55, 1, 0.55] }} transition={{ duration: 2.6, delay: (i % 4) * 0.5, repeat: Infinity }} />
+            <circle cx={x} cy={y + 6} r="14" fill="#ffc46b" className="loop loop-twinkle" style={{ '--lo': 0.1, '--hi': 0.34, animationDuration: '2.6s', animationDelay: `${(i % 4) * 0.5}s` }} />
+            <circle cx={x} cy={y + 6} r="4.6" fill="#ffd98a" className="loop loop-twinkle" style={{ '--lo': 0.55, '--hi': 1, animationDuration: '2.6s', animationDelay: `${(i % 4) * 0.5}s` }} />
           </g>
         )
       })}
