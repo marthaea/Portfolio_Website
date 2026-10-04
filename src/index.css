@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0b0b10;
+  --color-panel: #14141c;
+  --color-line: #262633;
+  --color-accent: #ff0077;
+  --font-sans: "Poppins", system-ui, sans-serif;
+  --font-serif: "Lora", Georgia, serif;
+}
+
+html { scroll-behavior: smooth; }
+body { @apply bg-ink text-zinc-200 font-sans antialiased; }
+::selection { background: var(--color-accent); color: #fff; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
