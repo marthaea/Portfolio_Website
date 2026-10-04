@@ -5,10 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/media-sizes.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "fetch-stories": "node scripts/fetch-wattpad.mjs",
-    "test:bot": "node scripts/test-bot.mjs"
+    "test:bot": "node scripts/test-bot.mjs",
+    "media-sizes": "node scripts/media-sizes.mjs"
   },
   "dependencies": {
     "@fontsource/mrs-saint-delafield": "^5.3.0",

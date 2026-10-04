@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { asset } from '../asset'
+import { asset, sizeOf } from '../asset'
 import SketchIcon from './SketchIcon'
 
 export function Tile({ title, icon, large, hideTitle }) {
@@ -15,7 +15,7 @@ export function Tile({ title, icon, large, hideTitle }) {
 export function Picture({ src, alt, icon, large, className }) {
   const [failed, setFailed] = useState(false)
   if (failed) return <Tile title={alt} icon={icon} large={large} />
-  return <img src={asset(src)} alt={alt} loading="lazy" onError={() => setFailed(true)} className={className} />
+  return <img src={asset(src)} {...sizeOf(src)} alt={alt} loading="lazy" onError={() => setFailed(true)} className={className} />
 }
 
 /** A book-style page with the story's opening lines. */
@@ -71,7 +71,7 @@ export default function ProjectModal({ p, onClose }) {
   }, [onClose])
 
   const media = p.video
-    ? <video src={asset(p.video)} controls autoPlay muted playsInline className="block w-full" />
+    ? <video src={asset(p.video)} {...sizeOf(p.video)} controls autoPlay muted playsInline className="block w-full" />
     : p.image
       ? <Picture src={p.image} alt={p.title} icon={p.icon} large className="block w-full align-bottom" />
       : <Tile title={p.title} icon={p.icon} large hideTitle />
