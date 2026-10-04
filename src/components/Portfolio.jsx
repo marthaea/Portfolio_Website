@@ -4,20 +4,25 @@ import { projects } from '../data/projects'
 import { asset } from '../asset'
 import { Reveal, SectionIntro } from './Reveal'
 
-function Tile({ title, className = '' }) {
-  return <div className={`flex aspect-[4/3] w-full items-center justify-center bg-[#313131] p-8 text-center font-poppins-semibold text-white ${className}`}>{title}</div>
+function Tile({ title, icon = 'icon-window', large }) {
+  return (
+    <div className="flex aspect-[4/3] w-full flex-col items-center justify-center bg-[#313131] p-8 text-center transition-opacity duration-500 group-hover:opacity-0">
+      <i className={`${icon} ${large ? 'text-[72px]' : 'text-[54px]'} text-pink`} aria-hidden />
+      <span className={`mt-4 font-poppins-semibold text-white ${large ? 'text-[28px]' : 'text-[22px]'}`}>{title}</span>
+    </div>
+  )
 }
 
-function Picture({ src, alt, className }) {
+function Picture({ src, alt, icon, large, className }) {
   const [failed, setFailed] = useState(false)
-  if (failed) return <Tile title={alt} className="text-[26px]" />
+  if (failed) return <Tile title={alt} icon={icon} large={large} />
   return <img src={asset(src)} alt={alt} loading="lazy" onError={() => setFailed(true)} className={className} />
 }
 
 function Thumb({ p }) {
   if (p.video) return <video src={asset(p.video)} muted playsInline preload="metadata" className="block w-full" />
-  if (p.image) return <Picture src={p.image} alt={p.title} className="block w-full align-middle transition-all duration-500 ease-in-out group-hover:scale-105" />
-  return <Tile title={p.title} className="text-[26px]" />
+  if (p.image) return <Picture src={p.image} alt={p.title} icon={p.icon} className="block w-full align-middle transition-all duration-500 ease-in-out group-hover:scale-105" />
+  return <Tile title={p.title} icon={p.icon} />
 }
 
 function Item({ p, onOpen, index }) {
@@ -67,8 +72,8 @@ function Modal({ p, onClose }) {
           {p.video
             ? <video src={asset(p.video)} controls autoPlay muted playsInline className="block w-full" />
             : p.image
-              ? <Picture src={p.image} alt={p.title} className="block w-full align-bottom" />
-              : <Tile title={p.title} className="text-[28px]" />}
+              ? <Picture src={p.image} alt={p.title} icon={p.icon} large className="block w-full align-bottom" />
+              : <Tile title={p.title} icon={p.icon} large />}
         </div>
         <div className="description-box">
           <h4>{p.title}</h4>
